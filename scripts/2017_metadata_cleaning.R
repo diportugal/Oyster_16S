@@ -1,22 +1,86 @@
+#Document Information ####
 #Oyster 16S Metadata Cleaning 
 #Author: Diana Portugal 
 #Contact: dportugal8@gmail.com 
 
-#This data set has the samples that were sequenced
 
+#Loading Data ####
+
+library(tidyverse)
 
 #Loading the data (Original Data is called DE_DATA_ForGenetics_17.csv)
-meta17 <- read.csv("Oyster_data_raw/DE_DATA_ForGenetics_17.csv")
+de_data17 <- read.csv("Oyster_data_raw/DE_DATA_ForGenetics_17.csv")
+de_data17
+
+#Loading the data (Original Data is called metadata_de17.csv)
+meta17 <- read.csv("Oyster_data_raw/metadata_de17.csv")
 meta17
 
+#Loading the data (Original Data Name = asvtable_de17.csv)
+asv17 <- read.csv("Oyster_data_raw/asvtable_de17.csv")
 
-#Renaming the Treatment Names 
-meta17$Treatment
-meta17$Treatment2 <- ifelse(meta17$Treatment =="HH", "HIGH_POLY",
-                            ifelse(meta17$Treatment == "HL", "HIGH_MONO", 
-                                   ifelse(meta17$Treatment == "LL", "LOW_MONO", "LOW_POLY")))
 
-                       
-                         
-                          
+#Renaming the Treatment Names ####
+de_data17$Treatment
+de_data17$Treatment2 <- ifelse(de_data17$Treatment =="HH", "HIGH_POLY",
+                            ifelse(de_data17$Treatment == "HL", "HIGH_MONO", 
+                                   ifelse(de_data17$Treatment == "LL", "LOW_MONO", "LOW_POLY")))
+
+
+#Creating a new column names Colornumber 
+de_data17$Colornumber <- paste0(de_data17$Color, de_data17$Number) 
+
+
+#Creating the UniqueIDs in de_data ####
+de_data17$UniqueID <- paste("2017", de_data17$Site, de_data17$Treatment2, de_data17$Colornumber, de_data17$Species, sep = "_")
+
+
+
+#Using Merge to combine the two data frames  ####
+#Done by matching the Unique ID columns
+meta17data <- merge(meta17, de_data17, by = "UniqueID", all.x = TRUE) #Matching by column UniqueID, all.x referrers to Meta17 because it was on the X place
+
+
+#Deleting columns in the new data frame
+data_meta17_clean <- select(meta17data, 
+                            -"X",
+                            -"V1", 
+                            -"Phase_1_DO",
+                            -"Phase_1_temp", 
+                            -"Phase_2_DO", 
+                            -"Phase_2_Temp",
+                            -"Overall_treatment", 
+                            -"Date_post",
+                            -"Notes_pre", 
+                            -"POST_DEAD_ALIVE",
+                            -"Dry_Weight_plate", 
+                            -"Dry_weight_final", 
+                            -"Dry_weight_shell", 
+                            -"Notes_post")
+
+
+
+
+#Genetics weight???
+
+#Getting rid of the "missing" data ####
+
+#Attempt 1 (QUESTION: WHICH IS PREFERABLE?)
+data_meta17_clean$Length_pre <-gsub("MISSING","",as.character(data_meta17_clean$Length_pre))
+data_meta17_clean
+
+#Attempt 2 (QUESTION: WHICH IS PREFERABLE?) - (I am assuming this one becuase we can then filter out the NAs?!)
+data_meta17_clean$Width_pre <-sub("MISSING","NA", data_meta17_clean$Width_pre)
+data_meta17_clean
+
+#comment 
+
+
+
+
+
+
+
+        
+                  
                       
