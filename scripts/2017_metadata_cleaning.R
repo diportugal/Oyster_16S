@@ -17,7 +17,7 @@ meta17 <- read.csv("Oyster_data_raw/metadata_de17.csv")
 meta17
 
 #Loading the data (Original Data Name = asvtable_de17.csv)
-asv17 <- read.csv("Oyster_data_raw/asvtable_de17.csv")
+asv17 <- fread.csv("Oyster_data_raw/asvtable_de17.csv")
 
 
 #Renaming the Treatment Names ####
@@ -56,24 +56,87 @@ data_meta17_clean <- select(meta17data,
                             -"Dry_Weight_plate", 
                             -"Dry_weight_final", 
                             -"Dry_weight_shell", 
-                            -"Notes_post")
+                            -"Notes_post", 
+                            -"Genetics_Weight")
 
 
 
-
-#Genetics weight???
 
 #Getting rid of the "missing" data ####
+#Changing the MISSING data in the measurements to NA values
 
-#Attempt 1 (QUESTION: WHICH IS PREFERABLE?)
-data_meta17_clean$Length_pre <-gsub("MISSING","",as.character(data_meta17_clean$Length_pre))
+data_meta17_clean$Length_pre <-sub("MISSING","NA", data_meta17_clean$Length_pre)
 data_meta17_clean
 
-#Attempt 2 (QUESTION: WHICH IS PREFERABLE?) - (I am assuming this one becuase we can then filter out the NAs?!)
 data_meta17_clean$Width_pre <-sub("MISSING","NA", data_meta17_clean$Width_pre)
 data_meta17_clean
 
-#comment 
+data_meta17_clean$Height_pre <-sub("MISSING","NA", data_meta17_clean$Height_pre)
+data_meta17_clean
+
+data_meta17_clean$Weight_pre <-sub("MISSING","NA", data_meta17_clean$Weight_pre)
+data_meta17_clean
+
+
+#Loading Phyloseq ####
+
+if (!requireNamespace("BiocManager", quietly = TRUE))
+  install.packages("BiocManager")
+BiocManager::install(version = "3.13")
+
+install.packages(c('modelr', 'ade4', 'class', 'codetools', 'mgcv'))
+BiocManager::install('phyloseq')  
+  
+install.packages("BiocManager")
+BiocManager::install('phyloseq')  
+
+
+#Phyloseq Tutorial #1 ####
+
+library("phyloseq"); packageVersion("phyloseq")
+
+library("ggplot2"); packageVersion("ggplot2")
+
+theme_set(theme_bw())
+
+#Step 1
+otumat = matrix(sample(1:100, 100, replace = TRUE), nrow = 10, ncol = 10)
+otumat
+
+#Step2
+rownames(otumat) <- paste0("OTU", 1:nrow(otumat))
+colnames(otumat) <- paste0("Sample", 1:ncol(otumat))
+otumat
+
+#Step3
+taxmat = matrix(sample(letters, 70, replace = TRUE), nrow = nrow(otumat), ncol = 7)
+rownames(taxmat) <- rownames(otumat)
+colnames(taxmat) <- c("Domain", "Phylum", "Class", "Order", "Family", "Genus", "Species")
+taxmat
+
+#Step4
+library("phyloseq")
+OTU = otu_table(otumat, taxa_are_rows = TRUE)
+TAX = tax_table(taxmat)
+OTU
+
+TAX
+
+#Step5
+physeq = phyloseq(OTU, TAX)
+physeq
+
+#Step6
+plot_bar(physeq, fill = "Family")
+
+#Step 7
+sampledata = sample_data(data.frame(
+  Location = sample(LETTERS[1:4], size=nsamples(physeq), replace=TRUE),
+  Depth = sample(50:1000, size=nsamples(physeq), replace=TRUE),
+  row.names=sample_names(physeq),
+  stringsAsFactors=FALSE
+))
+sampledata
 
 
 
@@ -81,6 +144,3 @@ data_meta17_clean
 
 
 
-        
-                  
-                      
