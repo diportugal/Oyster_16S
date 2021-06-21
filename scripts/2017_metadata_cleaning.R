@@ -35,7 +35,6 @@ de_data17$Colornumber <- paste0(de_data17$Color, de_data17$Number)
 de_data17$UniqueID <- paste("2017", de_data17$Site, de_data17$Treatment2, de_data17$Colornumber, de_data17$Species, sep = "_")
 
 
-
 #Using Merge to combine the two data frames  ####
 #Done by matching the Unique ID columns
 meta17data <- merge(meta17, de_data17, by = "UniqueID", all.x = TRUE) #Matching by column UniqueID, all.x referrers to Meta17 because it was on the X place
