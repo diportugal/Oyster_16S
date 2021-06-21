@@ -9,6 +9,8 @@
 #MM - Macoma mitchelli (Clam) NEW NAME is AM - Ameritella mitchelli
 #MB = Macoma balthica (Clam) NEW NAME is LP - Limecola petalum 
 
+library(tidyverse)
+
 
 #Importing the data (Original Data Name = metadata_de18.csv)
 meta18 <- read.csv("Oyster_data_raw/metadata_de18.csv")
@@ -41,28 +43,45 @@ de_data18$Species <- ifelse(de_data18$Species =="CV", "CV",
 
 
 
+#Creating the Column to merge the two data sets called merge18 & merge18
+de_data18$Merge18 <- paste("2018",de_data18$Bucket, de_data18$Color.Number, de_data18$Species, sep="_") #(DE_DATA18)
+
+meta18$Merge18 <- paste("2018", meta18$Color_Bucket, meta18$Number, meta18$Species, sep="_") #(META18)
 
 
 
+#Using Merge to combine the two data frames  ####
+#Done by matching the Merge18 columns
+meta18data <- merge(meta18, de_data18, by = "Merge18", all.x = TRUE) #Matching by column Merge18, all.x referrers to Meta18 because it was on the X place
 
 
 
+#Deleting columns in the new data frame
+data_meta18_clean <- select(meta18data, 
+                            -"X.x",
+                            -"V1", 
+                            -"Site",
+                            -"peacrabs", 
+                            -"Phase_1_DO", 
+                            -"Phase_1_temp",
+                            -"Phase_2_DO", 
+                            -"Phase_2_Temp",
+                            -"Overall_treatment", 
+                            -"dead_barnacles",
+                            -"Parasites", 
+                            -"X.y", 
+                            -"Data_merge18", 
+                            -"merge18.y")
 
 
-filter(de_data18$Color_Bucket, is.na())
 
+#There is no missing data in this data set, there are only empty slots and NA values 
 
-#Creating a new column called Bucket_Number
-de_data18$Bucket_Number <- paste0(de_data18$Color_Bucket, de_data18$Number, is.na())
+library("phyloseq"); packageVersion("phyloseq")
 
-de_data17$Colornumber <- paste0(de_data17$Color, de_data17$Number) 
+library("ggplot2"); packageVersion("ggplot2")
 
-
-#Creating the UniqueID in DE_DATA18
-
-de_data18$UniqueID <- paste("2018", de_data18$Treatment1_Density, de_data18$Treatment2_Diversity,  )
-
-
+theme_set(theme_bw())
 
 
 
