@@ -81,7 +81,4 @@ physeq_class = phyloseq(OTU, TAX, SAMP)
 physeq_class
 
 #Comment 
-#Comment
-#com
-
 
