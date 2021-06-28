@@ -51,3 +51,29 @@ plot_richness(physeq_class, Phy.ord, x="samples", color="samples", measures=c("C
 
 
 ??plot_richness()
+
+
+
+
+
+#Use "require(RColorBrewer)"
+
+
+#Sarah's notes:
+#plot_bar(metaSF,  fill="Category", x="Replicate") +
+  geom_bar(aes(color=Category, fill=Category), stat="identity", position="stack")+
+  facet_grid(Year~Site_Name, scales="free_x")+
+  scale_fill_manual(values=mycolors)+
+  scale_color_manual(values=mycolors)+
+  theme_bw()+
+  theme(legend.position="top", legend.text=element_text(size=10), panel.border = element_blank(), 
+        panel.grid.major = element_blank(), 
+        panel.grid.minor.x = element_blank(),
+        axis.ticks.x=element_blank(), axis.line=element_line(color="black"),
+        text = element_text(size=10))
+
+
+
+
+
+
