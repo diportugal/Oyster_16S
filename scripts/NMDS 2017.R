@@ -12,6 +12,12 @@ library("plyr"); packageVersion("plyr")
 theme_set(theme_bw())
 
 
+#ORIGINAL DATA ####
+physeq_class
+
+
+#FILTERING FOR THE TOP 5 TAXA ####
+
 #Filtering for top 5 Kingdom (NOT DONE, not really necessary)
 genus.sum = tapply(taxa_sums(physeq_class), tax_table(physeq_class)[, "Genus"], sum, na.rm=TRUE)
 top5genus_nmds = names(sort(genus.sum, TRUE))[1:5]
@@ -24,22 +30,22 @@ top5phyla_nmds = names(sort(phylum.sum, TRUE))[1:5]
 physeq_class_5phyla = prune_taxa((tax_table(physeq_class)[, "Phylum"] %in% top5phyla_nmds), physeq_class)
 
 
-#Filtering for top 5 Class (NOT DONE)
-genus.sum = tapply(taxa_sums(physeq_class), tax_table(physeq_class)[, "Genus"], sum, na.rm=TRUE)
-top5genus_nmds = names(sort(genus.sum, TRUE))[1:5]
-physeq_class_5genus = prune_taxa((tax_table(physeq_class)[, "Genus"] %in% top5genus_nmds), physeq_class)
+#Filtering for top 5 Class 
+class.sum = tapply(taxa_sums(physeq_class), tax_table(physeq_class)[, "Class"], sum, na.rm=TRUE)
+top5class_nmds = names(sort(class.sum, TRUE))[1:5]
+physeq_class_5class = prune_taxa((tax_table(physeq_class)[, "Class"] %in% top5class_nmds), physeq_class)
 
 
-#Filtering for top 5 Order (NOT DONE)
-genus.sum = tapply(taxa_sums(physeq_class), tax_table(physeq_class)[, "Genus"], sum, na.rm=TRUE)
-top5genus_nmds = names(sort(genus.sum, TRUE))[1:5]
-physeq_class_5genus = prune_taxa((tax_table(physeq_class)[, "Genus"] %in% top5genus_nmds), physeq_class)
+#Filtering for top 5 Order 
+order.sum = tapply(taxa_sums(physeq_class), tax_table(physeq_class)[, "Order"], sum, na.rm=TRUE)
+top5order_nmds = names(sort(order.sum, TRUE))[1:5]
+physeq_class_5order = prune_taxa((tax_table(physeq_class)[, "Order"] %in% top5order_nmds), physeq_class)
 
 
-#Filtering for top 5 Family (NOT DONE)
-genus.sum = tapply(taxa_sums(physeq_class), tax_table(physeq_class)[, "Genus"], sum, na.rm=TRUE)
-top5genus_nmds = names(sort(genus.sum, TRUE))[1:5]
-physeq_class_5genus = prune_taxa((tax_table(physeq_class)[, "Genus"] %in% top5genus_nmds), physeq_class)
+#Filtering for top 5 Family
+family.sum = tapply(taxa_sums(physeq_class), tax_table(physeq_class)[, "Family"], sum, na.rm=TRUE)
+top5family_nmds = names(sort(family.sum, TRUE))[1:5]
+physeq_class_5family = prune_taxa((tax_table(physeq_class)[, "Family"] %in% top5family_nmds), physeq_class)
 
 
 #Filtering for top 5 genus 
@@ -47,10 +53,9 @@ genus.sum = tapply(taxa_sums(physeq_class), tax_table(physeq_class)[, "Genus"], 
 top5genus_nmds = names(sort(genus.sum, TRUE))[1:5]
 physeq_class_5genus = prune_taxa((tax_table(physeq_class)[, "Genus"] %in% top5genus_nmds), physeq_class)
 
-#WE COULD FILTER OUT THE TOP 5 RESULTS FOR EACH TAXA (IF WE WANTED TO....)
 
 
-
+#PLOT MANIPULATION EXAMPLES ####
 
 
 #STAGE 1 (Basic form)
@@ -82,12 +87,13 @@ print(nmds_plot3)
 
 
 #STAGE 4 (Title Manipulation)
+#NMDS Phyla
 nmds_plot4= plot_ordination(physeq_class_5phyla, data17.ord, type="taxa", color="Phylum")+
   scale_colour_manual(values=c("Cyanobacteria" = "#FA7169", "Firmicutes" = "#33BEFF", "Proteobacteria" = "#8FC172", "Spirochaetota"= "#FAC069", "Verrucomicrobiota"="#BA96D9", "NA"= NULL ))+
-  theme(legend.position="left", legend.text=element_text(size=10), 
+  theme(legend.position="right", legend.text=element_text(size=10), 
         axis.ticks.x=element_blank(), axis.line=element_line(color="black"),
         text = element_text(size=10), 
-        plot.title = element_text(face = "bold", hjust = 0.5, size = 20, colour = "#4E84C4"), 
+        plot.title = element_text(face = "bold", hjust = 0.5, size = 15, colour = "#4E84C4"), 
         plot.subtitle = element_text(hjust = 0.5))+
   labs(title = "NMDS of Top 5 Phyla",
        subtitle = "Plot the top 5 phyla in Oyster 16s data",
@@ -104,15 +110,156 @@ nmds_plot4 + facet_wrap(~Phylum, 3)
 #Stack of 3
 
 
-#We can pick variables from only the metadata17_df table that has the information of each oyster sample
-nmds_samp1 = plot_ordination(physeq_class_5phyla, data17.ord, type="samples", color="Treatment2", shape="Color") 
-nmds_samp1 + geom_polygon(aes(fill=Site.x)) + geom_point(size=5) + ggtitle(":)")
+#ANALYSIS BY TAXA ####
+#MAKING NMDS (TAXA) PLOTS FOR THE TOP RESULTS ON EACH TAXA 
+#Only considering taxa
+
+#NMDS of Kingdom Plots 
+nmds_plot_king <- plot_ordination(physeq_class, data17.ord, type="taxa", color="Kingdom")+
+  scale_colour_manual(values=c("Archaea" = "#FA7169", "Bacteria" = "#2E86C1", "Eukaryota" = "#8FC172", "NA"= "#AF7AC5" ))+
+  theme(legend.position="right", legend.text=element_text(size=10), 
+        axis.ticks.x=element_blank(), axis.line=element_line(color="black"),
+        text = element_text(size=10), 
+        plot.title = element_text(face = "bold", hjust = 0.5, size = 15, colour = "#4E84C4"), 
+        plot.subtitle = element_text(hjust = 0.5))+
+  labs(title = "NMDS Kingdom Plots",
+       subtitle = "Plotting Kingdoms Diversity",
+       caption = "Data source: Oyster 16s 2017")
+
+nmds_plot_king + facet_wrap(~Kingdom, 3)
 
 
 
+#NMDS of Class 
+nmds_plot_class <- plot_ordination(physeq_class_5class, data17.ord, type="taxa", color="Class")+
+  scale_colour_manual(values=c("Alphaproteobacteria" = "#FA7169", "Bacilli" = "#2E86C1", "Clostridia" = "#8FC172", "Gammaproteobacteria"= "#AF7AC5", "Spirochaetia"= "#FFB53F"))+
+  theme(legend.position="right", legend.text=element_text(size=10), 
+        axis.ticks.x=element_blank(), axis.line=element_line(color="black"),
+        text = element_text(size=10), 
+        plot.title = element_text(face = "bold", hjust = 0.5, size = 15, colour = "#4E84C4"), 
+        plot.subtitle = element_text(hjust = 0.5))+
+  labs(title = "NMDS Class Plots",
+       subtitle = "Plotting Class Diversity",
+       caption = "Data source: Oyster 16s 2017")
+
+nmds_plot_class + facet_wrap(~Class, 3)
 
 
 
+#NMDS of Order 
+nmds_plot_order <- plot_ordination(physeq_class_5order, data17.ord, type="taxa", color="Order")+
+  scale_colour_manual(values=c("Chlamydiales" = "#FA7169", "Chloroplast" = "#2E86C1", "Mycoplasmatales" = "#8FC172", "Peptostreptococcales-Tissierellales"= "#AF7AC5", "Spirochaetales"= "#FFB53F"))+
+  theme(legend.position="right", legend.text=element_text(size=10), 
+        axis.ticks.x=element_blank(), axis.line=element_line(color="black"),
+        text = element_text(size=10), 
+        plot.title = element_text(face = "bold", hjust = 0.5, size = 15, colour = "#4E84C4"), 
+        plot.subtitle = element_text(hjust = 0.5))+
+  labs(title = "NMDS Order Plots",
+       subtitle = "Plotting Order Diversity",
+       caption = "Data source: Oyster 16s 2017")
+
+nmds_plot_order + facet_wrap(~Order, 3)
+
+
+
+#NMDS of Family 
+nmds_plot_family <- plot_ordination(physeq_class_5family, data17.ord, type="taxa", color="Family")+
+  scale_colour_manual(values=c("Guggenheimella" = "#FA7169", "Mycoplasmataceae" = "#2E86C1", "Prolixibacteraceae" = "#8FC172", "Spirochaetaceae"= "#AF7AC5", "Vibrionaceae"= "#FFB53F"))+
+  theme(legend.position="right", legend.text=element_text(size=10), 
+        axis.ticks.x=element_blank(), axis.line=element_line(color="black"),
+        text = element_text(size=10), 
+        plot.title = element_text(face = "bold", hjust = 0.5, size = 15, colour = "#4E84C4"), 
+        plot.subtitle = element_text(hjust = 0.5))+
+  labs(title = "NMDS Family Plots",
+       subtitle = "Plotting Family Diversity",
+       caption = "Data source: Oyster 16s 2017")
+
+nmds_plot_family + facet_wrap(~Family, 3)
+
+
+
+#NMDS of Genus 
+nmds_plot_genus <- plot_ordination(physeq_class_5genus, data17.ord, type="taxa", color="Genus")+
+  scale_colour_manual(values=c("Acinetobacter" = "#FA7169", "Marinifilum" = "#2E86C1", "Mycoplasma" = "#8FC172", "Pseudomonas"= "#AF7AC5", "Vibrio"= "#FFB53F"))+
+  theme(legend.position="right", legend.text=element_text(size=10), 
+        axis.ticks.x=element_blank(), axis.line=element_line(color="black"),
+        text = element_text(size=10), 
+        plot.title = element_text(face = "bold", hjust = 0.5, size = 15, colour = "#4E84C4"), 
+        plot.subtitle = element_text(hjust = 0.5))+
+  labs(title = "NMDS Genus Plots",
+       subtitle = "Plotting Genus Diversity",
+       caption = "Data source: Oyster 16s 2017")
+
+nmds_plot_genus + facet_wrap(~Genus, 3)
+
+
+
+#ANALYSIS BY SAMPLES ####
+
+#This is showing that the oysters that have a peacrab present a less similar than the ones that have no peacrab presence 
+plot_ordination(physeq_class, data17.ord, type="samples", color="peacrabs.x", shape=NULL) + 
+  theme(legend.position="right", legend.text=element_text(size=10), 
+        axis.ticks.x=element_blank(), axis.line=element_line(color="black"),
+        text = element_text(size=10), 
+        plot.title = element_text(face = "bold", hjust = 0.5, size = 15, colour = "#4E84C4"), 
+        plot.subtitle = element_text(hjust = 0.5))+
+  labs(title = "NMDS Peacrab Sample Plot",
+       subtitle = "Plotting Peacrab Sample Diversity",
+       caption = "Data source: Oyster 16s 2017")+
+  facet_wrap(~peacrabs.x, 2)
+
+
+
+plot_ordination(physeq_class, data17.ord, type="samples", color="RFTM_score.x", shape=NULL)+
+  theme(legend.position="right", legend.text=element_text(size=10), 
+        axis.ticks.x=element_blank(), axis.line=element_line(color="black"),
+        text = element_text(size=10), 
+        plot.title = element_text(face = "bold", hjust = 0.5, size = 15, colour = "#4E84C4"), 
+        plot.subtitle = element_text(hjust = 0.5))+
+  labs(title = "NMDS RFTM Score Sample Plot",
+       subtitle = "Plotting RFTM Score Diversity",
+       caption = "Data source: Oyster 16s 2017")+
+  facet_wrap(~RFTM_score.x, 2)
+
+
+#Treatment2 by RFTM Score separated by RFTM Scores
+plot_ordination(physeq_class, data17.ord, type="samples", color="RFTM_score.x", shape="Treatment2")+
+  theme(legend.position="right", legend.text=element_text(size=10), 
+        axis.ticks.x=element_blank(), axis.line=element_line(color="black"),
+        text = element_text(size=10), 
+        plot.title = element_text(face = "bold", hjust = 0.5, size = 15, colour = "#4E84C4"), 
+        plot.subtitle = element_text(hjust = 0.5))+
+  labs(title = "NMDS Treatment/RFTM Score Sample Plot",
+       subtitle = "Plotting Treatment/RFTM Score Diversity",
+       caption = "Data source: Oyster 16s 2017")+
+  facet_wrap(~RFTM_score.x, 2)
+
+
+#Treatment2 by RFTM Score separated by Treatment2
+plot_ordination(physeq_class, data17.ord, type="samples", color="RFTM_score.x", shape="Treatment2")+
+  theme(legend.position="right", legend.text=element_text(size=10), 
+        axis.ticks.x=element_blank(), axis.line=element_line(color="black"),
+        text = element_text(size=10), 
+        plot.title = element_text(face = "bold", hjust = 0.5, size = 15, colour = "#4E84C4"), 
+        plot.subtitle = element_text(hjust = 0.5))+
+  labs(title = "NMDS RFTM Score/Treatment Sample Plot",
+       subtitle = "Plotting RFTM Score/Treatment Diversity",
+       caption = "Data source: Oyster 16s 2017")+
+  facet_wrap(~Treatment2, 2)
+
+
+#Treatment2 by RFTM Score separated by Treatment2
+plot_ordination(physeq_class, data17.ord, type="samples", color="Treatment2", shape=NULL)+
+  scale_colour_manual(values=c("HIGH_MONO" = "#2E86C1", "HIGH_POLY" = "#8FC172", "LOW_MONO"= "#AF7AC5", "LOW_POLY"= "#FFB53F"))+
+  theme(legend.position="right", legend.text=element_text(size=10), 
+        axis.ticks.x=element_blank(), axis.line=element_line(color="black"),
+        text = element_text(size=10), 
+        plot.title = element_text(face = "bold", hjust = 0.5, size = 15, colour = "#4E84C4"), 
+        plot.subtitle = element_text(hjust = 0.5))+
+  labs(title = "NMDS Treatment Sample Plot",
+       subtitle = "Plotting Treatment Diversity",
+       caption = "Data source: Oyster 16s 2017")+
+  facet_wrap(~Treatment2, 2)
 
 
 
