@@ -73,6 +73,7 @@ data_meta18_clean <- select(meta18data,
                             -"RFTM_score.y")
 
 
+data_meta18_clean$delta_weight18 <- ((data_meta18_clean$Weight_post - data_meta18_clean$Weight)/data_meta18_clean$Weight)
 
 
 

@@ -31,7 +31,7 @@ physeq_class_5kingdom18 = prune_taxa((tax_table(physeq_class18)[, "Kingdom"] %in
 #filtering for top 5 phyla  
 phylum.sum18 = tapply(taxa_sums(physeq_class18), tax_table(physeq_class18)[, "Phylum"], sum, na.rm=TRUE)
 top5phyla_nmds18 = names(sort(phylum.sum18, TRUE))[1:5]
-physeq_class_5phyla18 = prune_taxa((tax_table(physeq_class18)[, "Phylum"] %in% top5phyla_nmds18), physeq_class)
+physeq_class_5phyla18 = prune_taxa((tax_table(physeq_class18)[, "Phylum"] %in% top5phyla_nmds18), physeq_class18)
 
 
 #Filtering for top 5 Class 
@@ -55,7 +55,7 @@ physeq_class_5family18 = prune_taxa((tax_table(physeq_class18)[, "Family"] %in% 
 #Filtering for top 5 genus
 genus.sum18 = tapply(taxa_sums(physeq_class18), tax_table(physeq_class18)[, "Genus"], sum, na.rm=TRUE)
 top5genus_nmds18 = names(sort(genus.sum18, TRUE))[1:5]
-physeq_class_5genus18 = prune_taxa((tax_table(physeq_class18)[, "Genus"] %in% top5genus_nmds18), physeq_class)
+physeq_class_5genus18 = prune_taxa((tax_table(physeq_class18)[, "Genus"] %in% top5genus_nmds18), physeq_class18)
 
 
 
@@ -73,10 +73,10 @@ plot_ordination(physeq_class18, data18.ord, type="taxa", color="Kingdom")+
         plot.subtitle = element_text(hjust = 0.5))+
   labs(title = "NMDS Kingdom Plots",
        subtitle = "Plotting Kingdoms Diversity",
-       caption = "Data source: Oyster 16s 2018")+ 
+       caption = "Data source: Oyster 16s 2018")+
   facet_wrap(~Kingdom, 3)
 
-
+  
 
 #NMDS Plot evaluating 2018 data Phylum Taxa
 plot_ordination(physeq_class_5phyla18, data18.ord, type="taxa", color="Phylum")+
@@ -198,25 +198,21 @@ plot_ordination(physeq_class18, data18.ord, type="samples", color = "Weight")+
        caption = "Data source: Oyster 16s 2018")
 
 
-
-#Question: How to combine the two data sets so that it doesnt create a Taxa and Samples shape and color
+#^^^^
+#Question: How to combine the two data sets so that it doesnt create a Taxa and Samples shape and color ####
 
 
 
 
 #Evaluation of Taxa/Samples ####
 
-plot_ordination(physeq_class18, data18.ord, type="biplot", color = "Species.x")+
-  facet_wrap(~Kingdom, ) 
+plot_ordination(physeq_class18, data18.ord, type="samples", color="delta_weight18")
 
 
-plot_ordination(physeq_class18, data18.ord, type="split", color="Kingdom", shape="Species.x")+
-  facet_wrap(~Kingdom, )
+plot_ordination(physeq_class18, data18.ord, type="biplot", color = "Species.x")
 
 
 
-#Calculating the change in weight of the bivales ####
-delta_weight18 <- ((data_meta18_clean$Weight_post - data_meta18_clean$Weight)/data_meta18_clean$Weight)
 
 
 

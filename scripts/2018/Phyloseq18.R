@@ -93,7 +93,6 @@ sample_data(physeq_class18)$RFTM_score.x=as.factor(sample_data(physeq_class18)$R
 sample_data(physeq_class18)$Weight=as.factor(sample_data(physeq_class18)$Weight)
 
 
-
 #End here with the phyloseq prep work ####
 
 
