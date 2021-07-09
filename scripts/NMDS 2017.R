@@ -115,7 +115,7 @@ nmds_plot4 + facet_wrap(~Phylum, 3)
 #Only considering taxa
 
 #NMDS of Kingdom Plots 
-nmds_plot_king <- plot_ordination(physeq_class, data17.ord, type="taxa", color="Kingdom")+
+plot_ordination(physeq_class, data17.ord, type="taxa", color="Kingdom")+
   scale_colour_manual(values=c("Archaea" = "#FA7169", "Bacteria" = "#2E86C1", "Eukaryota" = "#8FC172", "NA"= "#AF7AC5" ))+
   theme(legend.position="right", legend.text=element_text(size=10), 
         axis.ticks.x=element_blank(), axis.line=element_line(color="black"),
@@ -124,14 +124,13 @@ nmds_plot_king <- plot_ordination(physeq_class, data17.ord, type="taxa", color="
         plot.subtitle = element_text(hjust = 0.5))+
   labs(title = "NMDS Kingdom Plots",
        subtitle = "Plotting Kingdoms Diversity",
-       caption = "Data source: Oyster 16s 2017")
-
-nmds_plot_king + facet_wrap(~Kingdom, 3)
+       caption = "Data source: Oyster 16s 2017")+ 
+  facet_wrap(~Kingdom, 3)
 
 
 
 #NMDS of Class 
-nmds_plot_class <- plot_ordination(physeq_class_5class, data17.ord, type="taxa", color="Class")+
+plot_ordination(physeq_class_5class, data17.ord, type="taxa", color="Class")+
   scale_colour_manual(values=c("Alphaproteobacteria" = "#FA7169", "Bacilli" = "#2E86C1", "Clostridia" = "#8FC172", "Gammaproteobacteria"= "#AF7AC5", "Spirochaetia"= "#FFB53F"))+
   theme(legend.position="right", legend.text=element_text(size=10), 
         axis.ticks.x=element_blank(), axis.line=element_line(color="black"),
@@ -140,14 +139,13 @@ nmds_plot_class <- plot_ordination(physeq_class_5class, data17.ord, type="taxa",
         plot.subtitle = element_text(hjust = 0.5))+
   labs(title = "NMDS Class Plots",
        subtitle = "Plotting Class Diversity",
-       caption = "Data source: Oyster 16s 2017")
-
-nmds_plot_class + facet_wrap(~Class, 3)
+       caption = "Data source: Oyster 16s 2017")+ 
+  facet_wrap(~Class, 3)
 
 
 
 #NMDS of Order 
-nmds_plot_order <- plot_ordination(physeq_class_5order, data17.ord, type="taxa", color="Order")+
+plot_ordination(physeq_class_5order, data17.ord, type="taxa", color="Order")+
   scale_colour_manual(values=c("Chlamydiales" = "#FA7169", "Chloroplast" = "#2E86C1", "Mycoplasmatales" = "#8FC172", "Peptostreptococcales-Tissierellales"= "#AF7AC5", "Spirochaetales"= "#FFB53F"))+
   theme(legend.position="right", legend.text=element_text(size=10), 
         axis.ticks.x=element_blank(), axis.line=element_line(color="black"),
@@ -156,14 +154,13 @@ nmds_plot_order <- plot_ordination(physeq_class_5order, data17.ord, type="taxa",
         plot.subtitle = element_text(hjust = 0.5))+
   labs(title = "NMDS Order Plots",
        subtitle = "Plotting Order Diversity",
-       caption = "Data source: Oyster 16s 2017")
-
-nmds_plot_order + facet_wrap(~Order, 3)
+       caption = "Data source: Oyster 16s 2017")+ 
+  facet_wrap(~Order, 3)
 
 
 
 #NMDS of Family 
-nmds_plot_family <- plot_ordination(physeq_class_5family, data17.ord, type="taxa", color="Family")+
+plot_ordination(physeq_class_5family, data17.ord, type="taxa", color="Family")+
   scale_colour_manual(values=c("Guggenheimella" = "#FA7169", "Mycoplasmataceae" = "#2E86C1", "Prolixibacteraceae" = "#8FC172", "Spirochaetaceae"= "#AF7AC5", "Vibrionaceae"= "#FFB53F"))+
   theme(legend.position="right", legend.text=element_text(size=10), 
         axis.ticks.x=element_blank(), axis.line=element_line(color="black"),
@@ -172,15 +169,14 @@ nmds_plot_family <- plot_ordination(physeq_class_5family, data17.ord, type="taxa
         plot.subtitle = element_text(hjust = 0.5))+
   labs(title = "NMDS Family Plots",
        subtitle = "Plotting Family Diversity",
-       caption = "Data source: Oyster 16s 2017")
-
-nmds_plot_family + facet_wrap(~Family, 3)
+       caption = "Data source: Oyster 16s 2017")+ 
+  facet_wrap(~Family, 3)
 
 
 
 #NMDS of Genus 
-nmds_plot_genus <- plot_ordination(physeq_class_5genus, data17.ord, type="taxa", color="Genus")+
-  scale_colour_manual(values=c("Acinetobacter" = "#FA7169", "Marinifilum" = "#2E86C1", "Mycoplasma" = "#8FC172", "Pseudomonas"= "#AF7AC5", "Vibrio"= "#FFB53F"))+
+plot_ordination(physeq_class_5genus, data17.ord, type="taxa", color="Genus")+
+  scale_colour_manual(values=c("#FA7169", "#2E86C1", "#8FC172", "#AF7AC5", "#FFB53F", "#ffa64d"))+
   theme(legend.position="right", legend.text=element_text(size=10), 
         axis.ticks.x=element_blank(), axis.line=element_line(color="black"),
         text = element_text(size=10), 
@@ -189,8 +185,6 @@ nmds_plot_genus <- plot_ordination(physeq_class_5genus, data17.ord, type="taxa",
   labs(title = "NMDS Genus Plots",
        subtitle = "Plotting Genus Diversity",
        caption = "Data source: Oyster 16s 2017")
-
-nmds_plot_genus + facet_wrap(~Genus, 3)
 
 
 
@@ -205,8 +199,7 @@ plot_ordination(physeq_class, data17.ord, type="samples", color="peacrabs.x", sh
         plot.subtitle = element_text(hjust = 0.5))+
   labs(title = "NMDS Peacrab Sample Plot",
        subtitle = "Plotting Peacrab Sample Diversity",
-       caption = "Data source: Oyster 16s 2017")+
-  facet_wrap(~peacrabs.x, 2)
+       caption = "Data source: Oyster 16s 2017")
 
 
 
@@ -219,8 +212,23 @@ plot_ordination(physeq_class, data17.ord, type="samples", color="RFTM_score.x", 
   labs(title = "NMDS RFTM Score Sample Plot",
        subtitle = "Plotting RFTM Score Diversity",
        caption = "Data source: Oyster 16s 2017")+
-  facet_wrap(~RFTM_score.x, 2)
+  facet_wrap(~Site.x, )
 
+
+plot_ordination(physeq_class, data17.ord, type="samples", color="RFTM_score.x", shape="Site.x")+
+  theme(legend.position="right", legend.text=element_text(size=10), 
+        axis.ticks.x=element_blank(), axis.line=element_line(color="black"),
+        text = element_text(size=10), 
+        plot.title = element_text(face = "bold", hjust = 0.5, size = 15, colour = "#4E84C4"), 
+        plot.subtitle = element_text(hjust = 0.5))+
+  labs(title = "NMDS RFTM/Site/Peacrab",
+       subtitle = "Community Diversity",
+       caption = "Data source: Oyster 16s 2017")+
+  facet_wrap(~peacrabs.x, )
+
+
+
+#The next two plots are the same but are facet wrapped by different variables:
 
 #Treatment2 by RFTM Score separated by RFTM Scores
 plot_ordination(physeq_class, data17.ord, type="samples", color="RFTM_score.x", shape="Treatment2")+
@@ -248,37 +256,17 @@ plot_ordination(physeq_class, data17.ord, type="samples", color="RFTM_score.x", 
   facet_wrap(~Treatment2, 2)
 
 
-#Treatment2 by RFTM Score separated by Treatment2
-plot_ordination(physeq_class, data17.ord, type="samples", color="Treatment2", shape=NULL)+
-  scale_colour_manual(values=c("HIGH_MONO" = "#2E86C1", "HIGH_POLY" = "#8FC172", "LOW_MONO"= "#AF7AC5", "LOW_POLY"= "#FFB53F"))+
-  theme(legend.position="right", legend.text=element_text(size=10), 
-        axis.ticks.x=element_blank(), axis.line=element_line(color="black"),
-        text = element_text(size=10), 
-        plot.title = element_text(face = "bold", hjust = 0.5, size = 15, colour = "#4E84C4"), 
-        plot.subtitle = element_text(hjust = 0.5))+
-  labs(title = "NMDS Treatment Sample Plot",
-       subtitle = "Plotting Treatment Diversity",
-       caption = "Data source: Oyster 16s 2017")+
-  facet_wrap(~Treatment2, 2)
 
 
 
 
 
 
+#Question: why does it add the taxa to the peacrabs and samples to the kingdom variable. ####
 
-
-
-
-
-
-
-
-
-
-
-
-
+#ANALYSIS BY BIPLOT ####
+plot_ordination(physeq_class, data17.ord, type="biplot", color="peacrabs.x", shape="Kingdom", title="NMDS Peacrabs/RFTM/Phylum Biplot Plot")+
+  facet_wrap(~RFTM_score.x,)
 
 
 

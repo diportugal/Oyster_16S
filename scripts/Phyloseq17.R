@@ -1,4 +1,5 @@
 # Analysis of 2017 Data With Phyloseq
+#Preparing 2017 data for Phyloseq
 #2021-06-21
 #Author:Diana Portugal
 #Contact: dportugal8@gmail.com 
@@ -82,6 +83,18 @@ OTU=transform_sample_counts(OTU, function(x) 1E6 * x/sum(x))
 physeq_class = phyloseq(OTU, TAX, SAMP) 
 physeq_class
 
+
+
+
+sample_data(physeq_class)$peacrabs.x=as.factor(sample_data(physeq_class)$peacrabs.x)
+
+
+sample_data(physeq_class)$RFTM_score.x=as.factor(sample_data(physeq_class)$RFTM_score.x)
+
+
+
+
+#DO NOT CHANGE ANYTHING ON HERE
 
 
 
