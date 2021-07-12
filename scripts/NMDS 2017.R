@@ -228,6 +228,12 @@ plot_ordination(physeq_class, data17.ord, type="samples", color="RFTM_score.x", 
 
 
 
+p.p <- filter(metadata17_df, peacrabs.x %in% c("1"))
+
+
+
+
+
 #The next two plots are the same but are facet wrapped by different variables:
 
 #Treatment2 by RFTM Score separated by RFTM Scores
@@ -252,12 +258,20 @@ plot_ordination(physeq_class, data17.ord, type="samples", color="RFTM_score.x", 
         plot.subtitle = element_text(hjust = 0.5))+
   labs(title = "NMDS RFTM Score/Treatment Sample Plot",
        subtitle = "Plotting RFTM Score/Treatment Diversity",
+       caption = "Data source: Oyster 16s 2017")
+
+
+
+plot_ordination(physeq_class, data17.ord, type="samples", color="RFTM_score.x", shape=NULL)+
+  theme(legend.position="right", legend.text=element_text(size=10), 
+        axis.ticks.x=element_blank(), axis.line=element_line(color="black"),
+        text = element_text(size=10), 
+        plot.title = element_text(face = "bold", hjust = 0.5, size = 15, colour = "#4E84C4"), 
+        plot.subtitle = element_text(hjust = 0.5))+
+  labs(title = "NMDS RFTM Score/Treatment Sample Plot",
+       subtitle = "Plotting RFTM Score/Treatment Diversity",
        caption = "Data source: Oyster 16s 2017")+
-  facet_wrap(~Treatment2, 2)
-
-
-
-
+  facet_wrap(~peacrabs.x, )
 
 
 
