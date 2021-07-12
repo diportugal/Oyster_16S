@@ -182,7 +182,7 @@ plot_ordination(physeq_class18, data18.ord, type="samples", color = "RFTM_score.
         text = element_text(size=10), 
         plot.title = element_text(face = "bold", hjust = 0.5, size = 15, colour = "#2E86C1"), 
         plot.subtitle = element_text(hjust = 0.5))+
-  labs(title = "xxx",
+  labs(title = "RFTM Score by Species",
        caption = "Data source: Oyster 16s 2018")+
   facet_wrap(~Species.x, )
 

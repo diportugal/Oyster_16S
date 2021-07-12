@@ -15,7 +15,6 @@ plot_bar(physeq_class18, fill="Kingdom")
 #This loooks cray 
 
 
-
 data("physeq_class18")
 pc18.sp = subset_taxa(physeq_class18, Phylum == "Firmicutes")
 
@@ -24,6 +23,12 @@ plot_bar(physeq_class_5genus18, x="Species.x", fill="Genus")
 
 plot_bar(subset_taxa(physeq_class18, Phylum == "Verrucomicrobiota"))
 
+
+
+
+
+
+#TOP 5s ####
 
 
 #Kingdom per Species ID
@@ -103,9 +108,15 @@ plot_bar(physeq_class_5genus18, x="Species.x", fill="Genus")+
 
 #Question:Fixing abundance scale?? ####
 
-plot_bar(physeq_class18, x="Species.x", fill="RFTM_score.x")+
+plot_bar(physeq_class18, x="Species.x", y="RFTM_score.x")+
   geom_col()
 
+
+
+
+
+plot_bar(physeq_class18, x="Species.x", fill="RFTM_score.x")+
+  geom_col()
 
 plot_bar(physeq_class18, x="Species.x", fill="delta_weight18")+
   geom_col()
