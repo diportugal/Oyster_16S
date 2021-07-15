@@ -24,6 +24,17 @@ run23 <- read.csv("Oyster_data_raw/Run23_taxa.csv")
 
 
 
+#Making a delta weight, height, length, and width columns (post-pre/pre)
+
+metadata17_df$delta_weight17 <- ((metadata17_df$Weight_post - metadata17_df$Weight_pre)/metadata17_df$Weight_pre)
+
+metadata17_df$delta_height17 <- ((metadata17_df$Height_post - metadata17_df$Height_pre)/metadata17_df$Height_pre)
+
+metadata17_df$delta_length17 <- ((metadata17_df$Length_post - metadata17_df$Length_pre)/metadata17_df$Length_pre)
+
+metadata17_df$delta_width17 <- ((metadata17_df$Width_post - metadata17_df$Width_pre)/metadata17_df$Width_pre)
+
+
 ## CHANGING ROW NAMES FOR EACH DATA SET ####
 rownames(metadata17) = metadata17$X.1
 metadata17$X.1=NULL
@@ -85,16 +96,22 @@ physeq_class
 
 
 
-
 sample_data(physeq_class)$peacrabs.x=as.factor(sample_data(physeq_class)$peacrabs.x)
 
+sample_data(physeq_class)$RFTM.asfactor17 = sample_data(physeq_class)$RFTM_score.x=as.factor(sample_data(physeq_class)$RFTM_score.x)
 
-sample_data(physeq_class)$RFTM_score.x=as.factor(sample_data(physeq_class)$RFTM_score.x)
-
+RFTM.asnum17 = sample_data(physeq_class)$RFTM_score.x=as.numeric(sample_data(physeq_class)$RFTM_score.x)
 
 
 
 #DO NOT CHANGE ANYTHING ON HERE
+
+#RFTM DATA Go into that 
+
+
+
+
+
 
 
 

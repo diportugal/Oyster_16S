@@ -228,10 +228,6 @@ plot_ordination(physeq_class, data17.ord, type="samples", color="RFTM_score.x", 
 
 
 
-p.p <- filter(metadata17_df, peacrabs.x %in% c("1"))
-
-
-
 
 
 #The next two plots are the same but are facet wrapped by different variables:
@@ -273,6 +269,50 @@ plot_ordination(physeq_class, data17.ord, type="samples", color="RFTM_score.x", 
        caption = "Data source: Oyster 16s 2017")+
   facet_wrap(~peacrabs.x, )
 
+
+
+
+#creating labels for peacrabs ####
+plot_ordination(physeq_class, data17.ord, type="samples", color="RFTM_score.x", shape="Site.x", label="X")+
+  theme(legend.position="right", legend.text=element_text(size=10), 
+        axis.ticks.x=element_blank(), axis.line=element_line(color="black"),
+        text = element_text(size=10), 
+        plot.title = element_text(face = "bold", hjust = 0.5, size = 15, colour = "#4E84C4"), 
+        plot.subtitle = element_text(hjust = 0.5))+
+  labs(title = "NMDS RFTM/Site/Peacrab",
+       subtitle = "Community Diversity",
+       caption = "Data source: Oyster 16s 2017")+
+  facet_wrap(~peacrabs.x, )
+
+
+
+p.p <- filter(metadata17_df, peacrabs.x %in% c("1"))
+
+
+
+
+
+
+
+#DELTA WEIGHT - PAUSE - 
+
+sample_data(physeq_class)$delta_weight17=as.factor(sample_data(physeq_class)$delta_weight17)
+
+round(metadata17_df$delta_weight17,digits=2)
+
+
+plot_ordination(physeq_class, data17.ord, type="samples", color="delta_weight17", shape=NULL)+
+  theme(legend.position="right", legend.text=element_text(size=10), 
+        axis.ticks.x=element_blank(), axis.line=element_line(color="black"),
+        text = element_text(size=10), 
+        plot.title = element_text(face = "bold", hjust = 0.5, size = 15, colour = "#4E84C4"), 
+        plot.subtitle = element_text(hjust = 0.5))+
+  labs(title = "NMDS RFTM/Site/Peacrab",
+       subtitle = "Community Diversity",
+       caption = "Data source: Oyster 16s 2017")
+
+
+<-plot_bar(physeq_class, "delta_weight17", fill="peacrabs.x", facet_grid=~Site.x)
 
 
 
