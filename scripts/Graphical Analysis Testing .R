@@ -176,9 +176,53 @@ hist(metadata17_df$delta_weight17)
 
 
 
-??hist()
 
 
+
+
+
+#SIGNIFICANT OTUs from DESeq2 ####
+
+hist()
+
+
+
+
+#Histogram of Significant OTUs from the DESeq Analysis 
+hist(SigOTUs_RFTM_Tax17, 
+     main="Significant OTUs from RFTM/Taxa",
+     xlab="RFTM Score",
+     col="darkmagenta")+
+  geom_histogram(aes(fill = ))
+
+
+
+
+plotDispEsts(RFTM_dds17)
+
+
+plotMA( RFTM_res17, ylim = c(-1, 1) )
+
+#The plot represents each gene with a dot. 
+#The x axis is the average expression over all samples
+#The y axis the log2 fold change between treatment and control
+#Genes with an adjusted p value below a threshold (here 0.1, the default) are shown in red.
+
+
+
+hist(RFTM_res17$pvalue, breaks=20, col="grey" )
+
+#So you have a peak at 0, just like you saw in (A)… but you also have a peak close to 1. What do you do?
+#Don’t apply false discovery rate control to these p-values yet. (Why not? Because some kinds of FDR control are based on the assumption that your p-values near 1 are uniform. If you break this assumption, you’ll get way fewer significant hypotheses. Everyone loses).
+#Instead, figure out why your p-values show this behavior, and solve it appropriately:
+#Are you applying a one-tailed test (for example, testing whether each gene increased its expression in response to a drug)? If so, those p-values close to 1 are cases that are significant in the opposite direction (cases where genes decreased their expression). If you want your test to find these cases, switch to a two-sided test. If you don’t want to include them at all, you can try filtering out all cases where your estimate is in that direction.
+#Do all the p-values close to 1 belong to some pathological case? An example from my own field: RNA-Seq data, which consists of read counts per gene in each a variety of conditions, will sometimes include genes for which there are no reads in any condition. Some differential expression software will report a p-value of 1 for these genes. If you can find problematic cases like these, just filter them out beforehand (it’s not like you’re losing any information!)
+
+
+
+
+
+hist(RFTM_res17$padj, breaks=20, col="grey" )
 
 
 
