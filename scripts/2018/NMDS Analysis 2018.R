@@ -149,7 +149,6 @@ plot_ordination(physeq_class_5genus18, data18.ord, type="taxa", color="Genus")+
 
 #Evaluation of Samples ####
 
-
 #Show the similarity between species 
 plot_ordination(physeq_class18, data18.ord, type="samples", color="Species.x")+
   scale_colour_manual(values=c("AM" = "#FA7169", "CV" = "#AF7AC5", "IR" = "#8FC172", "LP"= "#2E86C1"))+
@@ -163,6 +162,7 @@ plot_ordination(physeq_class18, data18.ord, type="samples", color="Species.x")+
 
 
 
+#RFTM score has to be a factor here 
 plot_ordination(physeq_class18, data18.ord, type="samples", color = "RFTM_score.x")+
   scale_color_manual(values=c("#6495ED", "#FFAC1E", "#FF0000", "#02A026", "#525151", "#FF00FF", "#9700FF"))+
   theme(legend.position="right", legend.text=element_text(size=10), 
@@ -187,7 +187,7 @@ plot_ordination(physeq_class18, data18.ord, type="samples", color = "RFTM_score.
   facet_wrap(~Species.x, )
 
  
-#Busy Busy plot, not a lot of information derived from here
+#Busy Busy plot, not a lot of information derived from here - Don't do this quite yet
 plot_ordination(physeq_class18, data18.ord, type="samples", color = "Weight")+
   theme(legend.position="right", legend.text=element_text(size=10), 
         axis.ticks.x=element_blank(), axis.line=element_line(color="black"),
@@ -213,6 +213,17 @@ plot_ordination(physeq_class18, data18.ord, type="biplot", color = "Species.x")
 
 
 
+
+plot_ordination(physeq_class18, data18.ord, type="samples", color = "RFTM_score.x")+
+  scale_color_manual(values=c("#6495ED", "#FFAC1E", "#FF0000", "#02A026", "#525151", "#FF00FF", "#9700FF"))+
+  theme(legend.position="right", legend.text=element_text(size=10), 
+        axis.ticks.x=element_blank(), axis.line=element_line(color="black"),
+        text = element_text(size=10), 
+        plot.title = element_text(face = "bold", hjust = 0.5, size = 15, colour = "#2E86C1"), 
+        plot.subtitle = element_text(hjust = 0.5))+
+  labs(title = "Community Differences by RFTM Score",
+       caption = "Data source: Oyster 16s 2018")+
+  facet_wrap(~peacrab.x, )
 
 
 
