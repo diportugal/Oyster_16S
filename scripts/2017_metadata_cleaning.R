@@ -6,7 +6,9 @@
 
 #Loading Data ####
 
-library(tidyverse)
+#library(tidyverse)
+#install.packages("data.table")
+#library(data.table)
 
 #Loading the data (Original Data is called DE_DATA_ForGenetics_17.csv)
 de_data17 <- read.csv("Oyster_data_raw/DE_DATA_ForGenetics_17.csv")
@@ -17,7 +19,7 @@ meta17 <- read.csv("Oyster_data_raw/metadata_de17.csv")
 meta17
 
 #Loading the data (Original Data Name = asvtable_de17.csv)
-asv17 <- fread.csv("Oyster_data_raw/asvtable_de17.csv")
+asv17 <- fread("Oyster_data_raw/asvtable_de17.csv")
 
 
 #Renaming the Treatment Names ####
@@ -91,9 +93,6 @@ data_meta17_clean$UniqueID=NULL
 data_meta17_clean
 
 write.csv(data_meta17_clean, file = "Oyster_data_raw/meta17cleaned")
-
-
-
 
 
 

@@ -49,9 +49,9 @@ physeq_class_5family = prune_taxa((tax_table(physeq_class)[, "Family"] %in% top5
 
 
 #Filtering for top 5 genus 
-genus.sum = tapply(taxa_sums(physeq_class), tax_table(physeq_class)[, "Genus"], sum, na.rm=TRUE)
+genus.sum = tapply(taxa_sums(physeq_class), tax_table(physeq_class)[, "Genus.x"], sum, na.rm=TRUE)
 top5genus_nmds = names(sort(genus.sum, TRUE))[1:5]
-physeq_class_5genus = prune_taxa((tax_table(physeq_class)[, "Genus"] %in% top5genus_nmds), physeq_class)
+physeq_class_5genus = prune_taxa((tax_table(physeq_class)[, "Genus.x"] %in% top5genus_nmds), physeq_class)
 
 
 
@@ -229,7 +229,6 @@ plot_ordination(physeq_class, data17.ord, type="samples", color="RFTM_score.x", 
 
 
 
-
 #The next two plots are the same but are facet wrapped by different variables:
 
 #Treatment2 by RFTM Score separated by RFTM Scores
@@ -271,7 +270,6 @@ plot_ordination(physeq_class, data17.ord, type="samples", color="RFTM_score.x", 
 
 
 
-
 #creating labels for peacrabs ####
 plot_ordination(physeq_class, data17.ord, type="samples", color="RFTM_score.x", shape="Site.x", label="X")+
   theme(legend.position="right", legend.text=element_text(size=10), 
@@ -283,11 +281,6 @@ plot_ordination(physeq_class, data17.ord, type="samples", color="RFTM_score.x", 
        subtitle = "Community Diversity",
        caption = "Data source: Oyster 16s 2017")+
   facet_wrap(~peacrabs.x, )
-
-
-
-p.p <- filter(metadata17_df, peacrabs.x %in% c("1"))
-
 
 
 
@@ -312,15 +305,6 @@ plot_ordination(physeq_class, data17.ord, type="samples", color="delta_weight17"
        caption = "Data source: Oyster 16s 2017")
 
 
-<-plot_bar(physeq_class, "delta_weight17", fill="peacrabs.x", facet_grid=~Site.x)
-
-
-
-#Question: why does it add the taxa to the peacrabs and samples to the kingdom variable. ####
-
-#ANALYSIS BY BIPLOT ####
-plot_ordination(physeq_class, data17.ord, type="biplot", color="peacrabs.x", shape="Kingdom", title="NMDS Peacrabs/RFTM/Phylum Biplot Plot")+
-  facet_wrap(~RFTM_score.x,)
 
 
 

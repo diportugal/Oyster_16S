@@ -13,7 +13,7 @@ packageVersion("DESeq2")
 library("GenomicRanges")
 library("GenomeInfoDb") 
 require(DESeq2) #Not loading properly
-install.packages("DESeq2")#I think this fixed it....
+#install.packages("DESeq2")#I think this fixed it....
 library(dplyr)
 library(tidyverse)
 
@@ -33,7 +33,7 @@ physeq_class
 
 #Analysis of RFTM Scores ####
 #Make RFTM_score.x not a factor - Make it a numerical value 
-##DESeq2 Plot of RFTM Score filtered by Phylum and Kingdom ####
+##DESeq2 Plot of RFTM Score filtered by Phylum and Genus ####
 RFTM_dds17 <- phyloseq_to_deseq2(physeq_class, ~RFTM_score.x) 
 RFTM_dds17 <- DESeq(RFTM_dds17, test="Wald", fitType="parametric")
 
@@ -55,12 +55,13 @@ x = sort(x, TRUE)
 RFTM_sig17$Phylum = factor(as.character(RFTM_sig17$Phylum), levels= names(x))
 
 #Class = Variable 2
-x = tapply(RFTM_sig17$log2FoldChange, RFTM_sig17$Genus, function(x) max(x))
+x = tapply(RFTM_sig17$log2FoldChange, RFTM_sig17$Genus.x, function(x) max(x))
 x = sort(x, TRUE)
-RFTM_sig17$Genus = factor(as.character(RFTM_sig17$Genus), levels= names(x))
+RFTM_sig17$Genus = factor(as.character(RFTM_sig17$Genus.x), levels= names(x))
 
 
-ggplot(RFTM_sig17, aes(x=Genus, y=log2FoldChange, color=Phylum))+geom_point(size=2)+ 
+ggplot(RFTM_sig17, aes(x=Genus.x, y=log2FoldChange, color=Phylum))+
+  geom_point(size=2)+ 
   theme(axis.text.x = element_text(angle = -90, hjust = 0, vjust=0.5))+
   theme(legend.position="right", legend.text=element_text(size=10), 
         axis.ticks.x=element_blank(), axis.line=element_line(color="black"),
@@ -68,8 +69,8 @@ ggplot(RFTM_sig17, aes(x=Genus, y=log2FoldChange, color=Phylum))+geom_point(size
         plot.title = element_text(face = "bold", hjust = 0.5, size = 15, colour = "#4E84C4"), 
         plot.subtitle = element_text(hjust = 0.5,))+
   labs(title = "DESeq2 of RFTM/OTU",
-       subtitle = "Comparing phyla and Phylum presense as it compares to RFTM score",
-       caption = "Data source: Oyster 16s 2017")+
+       subtitle = "Comparing Genus and Phylum presense as it compares to RFTM score",
+       caption = "Data source: Oyster 16s 2017 (Using new taxa data)")+
   scale_colour_manual(values=c("#FA7169", "#33BEFF", "#8FC172","#FAC069", "#BA96D9", "#FCCFF4", "#BCB0EE", "#A6D5FD", "#4A456A", "#F7F3CD", "#F2B6AE" ))
 
 
@@ -101,7 +102,7 @@ x = sort(x, TRUE)
 RFTM_sig17$Genus = factor(as.character(RFTM_sig17$Genus), levels= names(x))
 
 
-ggplot(RFTM_sig17, aes(x=Phylum, y=log2FoldChange, color=Phylum))+geom_point(size=2)+ 
+ggplot(RFTM_sig17, aes(x=Genus, y=log2FoldChange, color=Phylum))+geom_point(size=2)+ 
   theme(axis.text.x = element_text(angle = -90, hjust = 0, vjust=0.5))+
   theme(legend.position="right", legend.text=element_text(size=10), 
         axis.ticks.x=element_blank(), axis.line=element_line(color="black"),
@@ -113,10 +114,13 @@ ggplot(RFTM_sig17, aes(x=Phylum, y=log2FoldChange, color=Phylum))+geom_point(siz
        caption = "Data source: Oyster 16s 2017")+
   scale_colour_manual(values=c("#FA7169", "#33BEFF", "#8FC172","#FAC069", "#BA96D9", "#FCCFF4", "#BCB0EE", "#A6D5FD", "#4A456A", "#F7F3CD", "#F2B6AE" ))
 
+ggsave("DESeq2_RFTM_Phylum_Genus.jpeg",width = 7, height = 5)
+
 
 
 ##DESeq2 Plot of RFTM Score filtered by Phylum and Class ####
-ggplot(RFTM_sig17, aes(x=Class, y=log2FoldChange, color=Phylum))+geom_point(size=2)+ 
+ggplot(RFTM_sig17, aes(x=Class, y=log2FoldChange, color=Phylum))+
+  geom_point(size=2)+ 
   theme(axis.text.x = element_text(angle = -90, hjust = 0, vjust=0.5))+
   theme(legend.position="right", legend.text=element_text(size=10), 
         axis.ticks.x=element_blank(), axis.line=element_line(color="black"),
@@ -127,6 +131,8 @@ ggplot(RFTM_sig17, aes(x=Class, y=log2FoldChange, color=Phylum))+geom_point(size
        subtitle = "Comparing Class and Phylum presense as it compares to RFTM score",
        caption = "Data source: Oyster 16s 2017")+
   scale_colour_manual(values=c("#FA7169", "#33BEFF", "#8FC172","#FAC069", "#BA96D9", "#FCCFF4", "#BCB0EE", "#A6D5FD", "#4A456A", "#F7F3CD", "#F2B6AE" ))
+
+ggsave("DESeq2_RFTM_Phylum_Class.jpeg",width = 7, height = 5)
 
 
 ##DESeq2 Plot of RFTM Score filtered by Phylum and Order ####
@@ -142,6 +148,7 @@ ggplot(RFTM_sig17, aes(x=Order, y=log2FoldChange, color=Phylum))+geom_point(size
        caption = "Data source: Oyster 16s 2017")+
   scale_colour_manual(values=c("#FA7169", "#33BEFF", "#8FC172","#FAC069", "#BA96D9", "#FCCFF4", "#BCB0EE", "#A6D5FD", "#4A456A", "#F7F3CD", "#F2B6AE" ))
 
+ggsave("DESeq2_RFTM_Phylum_Order.jpeg",width = 7, height = 5)
 
 
 ##DESeq2 Plot of RFTM Score filtered by Phylum and Family ####
@@ -157,46 +164,13 @@ ggplot(RFTM_sig17, aes(x=Family, y=log2FoldChange, color=Phylum))+geom_point(siz
        caption = "Data source: Oyster 16s 2017")+
   scale_colour_manual(values=c("#FA7169", "#33BEFF", "#8FC172","#FAC069", "#BA96D9", "#FCCFF4", "#BCB0EE", "#A6D5FD", "#4A456A", "#F7F3CD", "#F2B6AE" ))
 
-
-
-##DESeq2 Plot of RFTM Score filtered by Phylum and Genus ####
-ggplot(RFTM_sig17, aes(x=Genus, y=log2FoldChange, color=Phylum))+geom_point(size=2)+ 
-  theme(axis.text.x = element_text(angle = -90, hjust = 0, vjust=0.5))+
-  theme(legend.position="right", legend.text=element_text(size=10), 
-        axis.ticks.x=element_blank(), axis.line=element_line(color="black"),
-        text = element_text(size=10), 
-        plot.title = element_text(face = "bold", hjust = 0.5, size = 15, colour = "#4E84C4"), 
-        plot.subtitle = element_text(hjust = 0.5,))+
-  labs(title = "DESeq2 of RFTM/OTU",
-       subtitle = "Comparing Genus and Phylum presense as it compares to RFTM score",
-       caption = "Data source: Oyster 16s 2017")+
-  scale_colour_manual(values=c("#FA7169", "#33BEFF", "#8FC172","#FAC069", "#BA96D9", "#FCCFF4", "#BCB0EE", "#A6D5FD", "#4A456A", "#F7F3CD", "#F2B6AE" ))
+ggsave("DESeq2_RFTM_Phylum_Family.jpeg",width = 7, height = 5)
 
 
 
 
-
-
-
-
-
-RFTM_Sig_OTUs17 <- rld[ , rld$RFTM_score.x %in% c("Phylum", "Order") ]
-plotPCA(rld.sub, "condition")
-
-
-
-SigOTUs_RFTM_Tax17 <- RFTM_dds17$RFTM_score.x
-
-
-
-
-
-
-
-
-
-
-#Analysis of Treatment2 #### 
+#Pause here ####
+##Analysis of Treatment2 #### 
 
 Treat2_dds17 <- phyloseq_to_deseq2(physeq_class, ~Treatment2) 
 Treat2_dds17 <- DESeq(Treat2_dds17, test="Wald", fitType="parametric")
@@ -245,15 +219,13 @@ ggsave("Treat2_DESeq2.jpeg", width = 7, height = 5)
 
 
 
-#Additional things ####
+##Additional plot types ####
 
 plotMA( res, ylim = c(-1, 1) ) #what is this?
 #The x axis is the average expression over all samples, the y axis the log2 fold change between treatment and control.
 #Genes with an adjusted p value below a threshold (here 0.1, the default) are shown in blue
 
-
 plotDispEsts( rftm_dds, ylim = c(1e-6, 1e1) )
-
 
 plotPCA( sigtab, intgroup = c( "Treatment2", "RFTM_score.x"), col=cols )
 

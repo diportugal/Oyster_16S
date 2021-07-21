@@ -178,14 +178,9 @@ hist(metadata17_df$delta_weight17)
 
 
 
-
-
-
 #SIGNIFICANT OTUs from DESeq2 ####
 
 hist()
-
-
 
 
 #Histogram of Significant OTUs from the DESeq Analysis 
@@ -227,8 +222,23 @@ hist(RFTM_res17$padj, breaks=20, col="grey" )
 
 
 
+RFTM_sig17 #Sig OTUs 
 
 
+
+
+#make New Physeq object with significant  OTU 
+
+physeq_RFTM_Sig = phyloseq(RFTM_sig17)
+
+
+#Merge with Taxa 
+
+#Prune taxa to keep only Taxa from OTUs
+
+#The OTUs will prune, you will only keep the OTUs in the taxonomy table
+
+#prune taxonomy by sig otus
 
 
 
