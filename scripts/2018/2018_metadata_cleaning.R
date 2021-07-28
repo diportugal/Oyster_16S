@@ -42,6 +42,44 @@ de_data18$Species <- ifelse(de_data18$Species =="CV", "CV",
                                         ifelse(de_data18$Species == "MM", "AM", "LP")))
 
 
+#Creating a Treatment2 column with the combination ####
+de_data18$Treatment2_18 <- paste(de_data18$Treatment1_Density, "_", de_data18$Treatment2_Diversity)
+
+de_data18$Treatment2_18 <- ifelse(de_data18$Bucket =="HP1", "HIGH_POLY",
+                                  ifelse(de_data18$Bucket =="HP2", "HIGH_POLY",
+                                         ifelse(de_data18$Bucket =="HP3", "HIGH_POLY",
+                                               ifelse(de_data18$Bucket =="HP4", "HIGH_POLY",
+                                                     ifelse(de_data18$Bucket =="HP5", "HIGH_POLY",
+                                                           ifelse(de_data18$Bucket =="HP6", "HIGH_POLY",
+                                                                 ifelse(de_data18$Bucket =="HP7", "HIGH_POLY",
+                                                                       ifelse(de_data18$Bucket =="HP8", "HIGH_POLY",
+                                                                             ifelse(de_data18$Bucket =="HP9", "HIGH_POLY",
+                                  
+                            ifelse(de_data18$Bucket == "HM1", "HIGH_MONO",
+                                   ifelse(de_data18$Bucket == "HM2", "HIGH_MONO",
+                                          ifelse(de_data18$Bucket == "HM3", "HIGH_MONO",
+                                                 ifelse(de_data18$Bucket == "HM4", "HIGH_MONO",
+                                                        ifelse(de_data18$Bucket == "HM5", "HIGH_MONO",
+                                                               ifelse(de_data18$Bucket == "HM6", "HIGH_MONO",
+                                                                      ifelse(de_data18$Bucket == "HM7", "HIGH_MONO",
+                                                                             ifelse(de_data18$Bucket == "HM8", "HIGH_MONO",
+                                                                                    ifelse(de_data18$Bucket == "HM9", "HIGH_MONO",
+                                   
+                                   
+                            ifelse(de_data18$Bucket == "LP1", "LOW_POLY",
+                                   ifelse(de_data18$Bucket == "LP2", "LOW_POLY",
+                                          ifelse(de_data18$Bucket == "LP3", "LOW_POLY",
+                                                 ifelse(de_data18$Bucket == "LP4", "LOW_POLY",
+                                                        ifelse(de_data18$Bucket == "LP5", "LOW_POLY",
+                                                               ifelse(de_data18$Bucket == "LP6", "LOW_POLY",
+                                                                      ifelse(de_data18$Bucket == "LP7", "LOW_POLY",
+                                                                             ifelse(de_data18$Bucket == "LP8", "LOW_POLY",
+                                                                                    ifelse(de_data18$Bucket == "LP9", "LOW_POLY", "LOW_MONO")))))))))))))))))))))))))))
+
+
+
+
+
 
 #Creating the Column to merge the two data sets called merge18 & merge18
 de_data18$Merge18 <- paste("2018",de_data18$Bucket, de_data18$Color.Number, de_data18$Species, sep="_") #(DE_DATA18)
@@ -74,6 +112,9 @@ data_meta18_clean <- select(meta18data,
 
 
 data_meta18_clean$delta_weight18 <- ((data_meta18_clean$Weight_post - data_meta18_clean$Weight)/data_meta18_clean$Weight)
+
+#Creating a Treatment2 column with the combination ####
+data_meta18_clean$Treatment2_18 <- paste(data_meta18_clean$Treatment1_Density, "_", data_meta18_clean$Treatment2_Diversity)
 
 
 

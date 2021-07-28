@@ -72,6 +72,9 @@ sample_names(SAMP18)
 sample_names(OTU18)
 sample_names(sig_RF_TAX18)
 
+dim(SAMP18)
+dim(OTU18)
+dim(sig_RF_TAX18)
 
 
 ## EVENING OUT THE DATA ####
@@ -89,7 +92,9 @@ data_sig18.ord <- ordinate(physeq_sig18, "NMDS", "bray")
 
 
 view(SAMP18)
-
+dim(SAMP18)
+dim(OTU18)
+dim(sig_RF_TAX18)
 
 
 #NMDS Plots for Each Taxonomy level; type="taxa"####

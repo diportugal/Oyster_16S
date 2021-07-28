@@ -38,7 +38,6 @@ physeq_class18
 #Analysis of RFTM Scores ####
 #Make RFTM_score.x not a factor - Make it a numerical value 
 #dds = estimateSizeFactors(dds, geoMeans=geoMeans, locfunc=shorth
-##DESeq2 Plot of RFTM Score filtered by Phylum and Class ####
 
 gm_mean <-function(row) if (all(row == 0)) 0 else exp(mean(log(row[row != 0])))
 geoMeans <- apply(OTU18, 2, gm_mean)
@@ -65,9 +64,6 @@ RFTM_sig18 = cbind(as(RFTM_sig18, "data.frame"), as(tax_table(physeq_class18)[ro
 head(RFTM_sig18)
 dim(RFTM_sig18)
 
-theme_set(theme_bw())
-scale_fill_discrete <- function(palname = "Set1", ...) {
-  scale_fill_brewer(palette = palname, ...)}
 
 #Phylum = Variable 1
 x = tapply(RFTM_sig18$log2FoldChange, RFTM_sig18$Phylum, function(x) max(x))
@@ -144,8 +140,6 @@ ggplot(RFTM_sig18, aes(x=Genus.x, y=log2FoldChange, color=Phylum))+
        caption = "Data source: Oyster 16s 2018")
 
 ggsave("DESeq2_RFTM_Phylum_Genus.x.jpeg",width = 7, height = 5)
-
-
 
 
 

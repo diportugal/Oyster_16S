@@ -126,6 +126,8 @@ plot_ordination(physeq_class, data17.ord, type="taxa", color="Kingdom")+
        subtitle = "Plotting Kingdoms Diversity",
        caption = "Data source: Oyster 16s 2017")+ 
   facet_wrap(~Kingdom, 3)
+ggsave(filename = "NMDS_King_17.jpeg", plot=last_plot(), path ="Plot Diagrams/", width = 7, height = 5)  
+
 
 
 
@@ -141,6 +143,8 @@ plot_ordination(physeq_class_5class, data17.ord, type="taxa", color="Class")+
        subtitle = "Plotting Class Diversity",
        caption = "Data source: Oyster 16s 2017")+ 
   facet_wrap(~Class, 3)
+ggsave(filename = "NMDS_Class_17.jpeg", plot=last_plot(), path ="Plot Diagrams/", width = 7, height = 5)  
+
 
 
 
@@ -156,6 +160,7 @@ plot_ordination(physeq_class_5order, data17.ord, type="taxa", color="Order")+
        subtitle = "Plotting Order Diversity",
        caption = "Data source: Oyster 16s 2017")+ 
   facet_wrap(~Order, 3)
+ggsave(filename = "NMDS_Order_17.jpeg", plot=last_plot(), path ="Plot Diagrams/", width = 7, height = 5)  
 
 
 
@@ -171,11 +176,12 @@ plot_ordination(physeq_class_5family, data17.ord, type="taxa", color="Family")+
        subtitle = "Plotting Family Diversity",
        caption = "Data source: Oyster 16s 2017")+ 
   facet_wrap(~Family, 3)
+ggsave(filename = "NMDS_Family_17.jpeg", plot=last_plot(), path ="Plot Diagrams/", width = 7, height = 5)  
 
 
 
 #NMDS of Genus 
-plot_ordination(physeq_class_5genus, data17.ord, type="taxa", color="Genus")+
+plot_ordination(physeq_class_5genus, data17.ord, type="taxa", color="Genus.x")+
   scale_colour_manual(values=c("#FA7169", "#2E86C1", "#8FC172", "#AF7AC5", "#FFB53F", "#ffa64d"))+
   theme(legend.position="right", legend.text=element_text(size=10), 
         axis.ticks.x=element_blank(), axis.line=element_line(color="black"),
@@ -184,7 +190,9 @@ plot_ordination(physeq_class_5genus, data17.ord, type="taxa", color="Genus")+
         plot.subtitle = element_text(hjust = 0.5))+
   labs(title = "NMDS Genus Plots",
        subtitle = "Plotting Genus Diversity",
-       caption = "Data source: Oyster 16s 2017")
+       caption = "Data source: Oyster 16s 2017")+
+  facet_wrap(~Genus.x, )
+ggsave(filename = "NMDS_Genus_17.jpeg", plot=last_plot(), path ="Plot Diagrams/", width = 7, height = 5)  
 
 
 
@@ -283,26 +291,6 @@ plot_ordination(physeq_class, data17.ord, type="samples", color="RFTM_score.x", 
   facet_wrap(~peacrabs.x, )
 
 
-
-
-
-
-#DELTA WEIGHT - PAUSE - 
-
-sample_data(physeq_class)$delta_weight17=as.factor(sample_data(physeq_class)$delta_weight17)
-
-round(metadata17_df$delta_weight17,digits=2)
-
-
-plot_ordination(physeq_class, data17.ord, type="samples", color="delta_weight17", shape=NULL)+
-  theme(legend.position="right", legend.text=element_text(size=10), 
-        axis.ticks.x=element_blank(), axis.line=element_line(color="black"),
-        text = element_text(size=10), 
-        plot.title = element_text(face = "bold", hjust = 0.5, size = 15, colour = "#4E84C4"), 
-        plot.subtitle = element_text(hjust = 0.5))+
-  labs(title = "NMDS RFTM/Site/Peacrab",
-       subtitle = "Community Diversity",
-       caption = "Data source: Oyster 16s 2017")
 
 
 

@@ -53,14 +53,14 @@ physeq_class_5family18 = prune_taxa((tax_table(physeq_class18)[, "Family"] %in% 
 
 
 #Filtering for top 5 genus
-genus.sum18 = tapply(taxa_sums(physeq_class18), tax_table(physeq_class18)[, "Genus"], sum, na.rm=TRUE)
+genus.sum18 = tapply(taxa_sums(physeq_class18), tax_table(physeq_class18)[, "Genus.x"], sum, na.rm=TRUE)
 top5genus_nmds18 = names(sort(genus.sum18, TRUE))[1:5]
-physeq_class_5genus18 = prune_taxa((tax_table(physeq_class18)[, "Genus"] %in% top5genus_nmds18), physeq_class18)
+physeq_class_5genus18 = prune_taxa((tax_table(physeq_class18)[, "Genus.x"] %in% top5genus_nmds18), physeq_class18)
 
 
 
 
-#Evaluation of Taxa ####
+#Evaluation of Top 5 Taxa ####
 
 
 #NMDS Plot evaluating 2018 data Kingdom Taxa
@@ -72,11 +72,12 @@ plot_ordination(physeq_class18, data18.ord, type="taxa", color="Kingdom")+
         plot.title = element_text(face = "bold", hjust = 0.5, size = 15, colour = "#4E84C4"), 
         plot.subtitle = element_text(hjust = 0.5))+
   labs(title = "NMDS Kingdom Plots",
-       subtitle = "Plotting Kingdoms Diversity",
-       caption = "Data source: Oyster 16s 2018")+
-  facet_wrap(~Kingdom, 3)
+       subtitle = "Plotting Top 5 Kingdoms Diversity",
+       caption = "Data source: Oyster 16s 2018")
 
-  
+ggsave(filename = "NMDS_Tax_King18.jpeg", plot=last_plot(), path ="Plot Diagrams 2018/Original_2018/", width = 7, height = 5)  
+
+
 
 #NMDS Plot evaluating 2018 data Phylum Taxa
 plot_ordination(physeq_class_5phyla18, data18.ord, type="taxa", color="Phylum")+
@@ -87,9 +88,12 @@ plot_ordination(physeq_class_5phyla18, data18.ord, type="taxa", color="Phylum")+
         plot.title = element_text(face = "bold", hjust = 0.5, size = 15, colour = "#4E84C4"), 
         plot.subtitle = element_text(hjust = 0.5))+
   labs(title = "NMDS Phylum Plots",
-       subtitle = "Plotting Phylum Diversity",
-       caption = "Data source: Oyster 16s 2018")+ 
-  facet_wrap(~Phylum, 3)
+       subtitle = "Plotting Top 5 Phylum Diversity",
+       caption = "Data source: Oyster 16s 2018")
+
+ggsave(filename = "NMDS_Tax_TopPhy18.jpeg", plot=last_plot(), path ="Plot Diagrams 2018/Original_2018/", width = 7, height = 5)  
+
+
 
 
 #NMDS Plot evaluating 2018 data Class Taxa
@@ -101,10 +105,10 @@ plot_ordination(physeq_class_5class18, data18.ord, type="taxa", color="Class")+
         plot.title = element_text(face = "bold", hjust = 0.5, size = 15, colour = "#4E84C4"), 
         plot.subtitle = element_text(hjust = 0.5))+
   labs(title = "NMDS Class Plots",
-       subtitle = "Plotting Class Diversity",
-       caption = "Data source: Oyster 16s 2018")+ 
-  facet_wrap(~Class, 3)
+       subtitle = "Plotting Top 5 Class Diversity",
+       caption = "Data source: Oyster 16s 2018")
 
+ggsave(filename = "NMDS_Tax_TopClass18.jpeg", plot=last_plot(), path ="Plot Diagrams 2018/Original_2018/", width = 7, height = 5)  
 
 
 #NMDS Plot evaluating 2018 data Order Taxa (Not Done)
@@ -115,9 +119,11 @@ plot_ordination(physeq_class_5order18, data18.ord, type="taxa", color="Order")+
         plot.title = element_text(face = "bold", hjust = 0.5, size = 15, colour = "#4E84C4"), 
         plot.subtitle = element_text(hjust = 0.5))+
   labs(title = "NMDS Order Plots",
-       subtitle = "Plotting Order Diversity",
-       caption = "Data source: Oyster 16s 2018")+ 
-  facet_wrap(~Order, 3)
+       subtitle = "Plotting Top 5 Order Diversity",
+       caption = "Data source: Oyster 16s 2018")
+
+ggsave(filename = "NMDS_Tax_TopOrder18.jpeg", plot=last_plot(), path ="Plot Diagrams 2018/Original_2018/", width = 7, height = 5)  
+
 
 
 #NMDS Plot evaluating 2018 data Family Taxa 
@@ -128,26 +134,30 @@ plot_ordination(physeq_class_5family18, data18.ord, type="taxa", color="Family")
         plot.title = element_text(face = "bold", hjust = 0.5, size = 15, colour = "#4E84C4"), 
         plot.subtitle = element_text(hjust = 0.5))+
   labs(title = "NMDS Family Plots",
-       subtitle = "Plotting Family Diversity",
-       caption = "Data source: Oyster 16s 2018")+ 
-  facet_wrap(~Family, 3)
+       subtitle = "Plotting Top 5 Family Diversity",
+       caption = "Data source: Oyster 16s 2018")
+
+ggsave(filename = "NMDS_Tax_TopFam18.jpeg", plot=last_plot(), path ="Plot Diagrams 2018/Original_2018/", width = 7, height = 5)  
+
 
 
 #NMDS Plot evaluating 2018 data Genus Taxa
-plot_ordination(physeq_class_5genus18, data18.ord, type="taxa", color="Genus")+
+plot_ordination(physeq_class_5genus18, data18.ord, type="taxa", color="Genus.x")+
   theme(legend.position="right", legend.text=element_text(size=10), 
         axis.ticks.x=element_blank(), axis.line=element_line(color="black"),
         text = element_text(size=10), 
         plot.title = element_text(face = "bold", hjust = 0.5, size = 15, colour = "#4E84C4"), 
         plot.subtitle = element_text(hjust = 0.5))+
   labs(title = "NMDS Genus Plots",
-       subtitle = "Plotting Genus Diversity",
-       caption = "Data source: Oyster 16s 2018")+ 
-  facet_wrap(~Genus, 3)
+       subtitle = "Plotting Top 5 Genus Diversity",
+       caption = "Data source: Oyster 16s 2018")
+
+ggsave(filename = "NMDS_Tax_TopGen18.jpeg", plot=last_plot(), path ="Plot Diagrams 2018/Original_2018/", width = 7, height = 5)  
 
 
 
-#Evaluation of Samples ####
+
+##Evaluation of Samples ####
 
 #Show the similarity between species 
 plot_ordination(physeq_class18, data18.ord, type="samples", color="Species.x")+
@@ -158,11 +168,48 @@ plot_ordination(physeq_class18, data18.ord, type="samples", color="Species.x")+
         plot.title = element_text(face = "bold", hjust = 0.5, size = 15, colour = "#2E86C1"), 
         plot.subtitle = element_text(hjust = 0.5))+
   labs(title = "NMDS Species Differences",
-       caption = "Data source: Oyster 16s 2018")
+       caption = "Data source: Oyster 16s 2018", col="Bivalve Species")
+
+ggsave(filename = "NMDS_BiSpecies18.jpeg", plot=last_plot(), path ="Plot Diagrams 2018/Original_2018/", width = 7, height = 5)  
+
+
+
+plot_ordination(physeq_class18, data18.ord, type="samples", color="Treatment2_18")+
+ theme(legend.position="right", legend.text=element_text(size=10), 
+        axis.ticks.x=element_blank(), axis.line=element_line(color="black"),
+        text = element_text(size=10), 
+        plot.title = element_text(face = "bold", hjust = 0.5, size = 15, colour = "#2E86C1"), 
+        plot.subtitle = element_text(hjust = 0.5))+
+  labs(title = "NMDS Treatment Differences",
+       caption = "Data source: Oyster 16s 2018", col="Treatment Type")
+
+ggsave(filename = "NMDS_Treat2_18.jpeg", plot=last_plot(), path ="Plot Diagrams 2018/Original_2018/", width = 7, height = 5)  
+
+
+
+
+plot_ordination(physeq_class18, data18.ord, type="samples", color="Treatment2_18")+
+  theme(legend.position="right", legend.text=element_text(size=10), 
+        axis.ticks.x=element_blank(), axis.line=element_line(color="black"),
+        text = element_text(size=10), 
+        plot.title = element_text(face = "bold", hjust = 0.5, size = 15, colour = "#2E86C1"), 
+        plot.subtitle = element_text(hjust = 0.5))+
+  labs(title = "NMDS Treatment Differences",
+       caption = "Data source: Oyster 16s 2018", col="Treatment Type")+
+  facet_wrap(~Species.x, )
+
+ggsave(filename = "NMDS_Treat2_Spec18.jpeg", plot=last_plot(), path ="Plot Diagrams 2018/Original_2018/", width = 7, height = 5)  
+
+
+
+
+
 
 
 
 #RFTM score has to be a factor here 
+RFTM.num18 <- sample_data(physeq_class18)$RFTM.asnum18 = sample_data(physeq_class18)$RFTM.asnum18 = as.numeric(sample_data(physeq_class18)$RFTM_score.x)
+
 plot_ordination(physeq_class18, data18.ord, type="samples", color = "RFTM_score.x")+
   scale_color_manual(values=c("#6495ED", "#FFAC1E", "#FF0000", "#02A026", "#525151", "#FF00FF", "#9700FF"))+
   theme(legend.position="right", legend.text=element_text(size=10), 

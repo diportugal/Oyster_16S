@@ -87,6 +87,8 @@ sample_names(SAMP)
 sample_names(OTU)
 sample_names(TAX)
 
+dim(OTU)
+
 view(TAX)
 
 ## EVENING OUT THE DATA ####
