@@ -49,8 +49,12 @@ p+
   stat_summary(fun.data = mean_se, geom ="errorbar", width=0.2)
 
 
+
+dim(phylo17_rftm)
+
+
 #I wanted to compare the original Phyloseq object to the one with the significant OTUs from RFTM DESeq
-#They appear to be the same??
+#They appear to be the same?? 
 plot_richness(phylo17_rftm, x="RFTM_score.x", measures=c("Simpson", "Shannon"), col="Site.x")+
   geom_point(size=2, alpha=0.7)+ 
   theme(axis.text.x = element_text(angle = -90, hjust = 0, vjust=0.5))+
@@ -79,13 +83,6 @@ plot_richness(physeq_class, x="RFTM_score.x", measures=c("Simpson", "Shannon"), 
 ggsave("Diversity_RFTM_Orig.jpeg", path="Plot Diagrams/", width = 7, height = 5)
 
 
-
-
-
-
-
-
-
 plot_richness(phylo17_rftm, x="RFTM_score.x", measures=c("Simpson", "Shannon"), col="Site.x")+
   geom_point(size=2, alpha=0.7)+
   theme(axis.text.x = element_text(angle = -90, hjust = 0, vjust=0.5))+
@@ -102,6 +99,98 @@ plot_richness(phylo17_rftm, x="RFTM_score.x", measures=c("Simpson", "Shannon"), 
 
 
 
-barplot(phylo17_rftm, x="RFTM_score.x")
+
+plot_bar(physeq_class, aes(x="Site.x", fill="Species.x"))
+
+plot_bar(physeq_class,"Site.x")
+
+
+plot_bar(physeq_class,"Site.x", fill="Species.x")
+
+
+plot_bar(physeq_class,"RFTM_score.x", fill="Site.x")+
+  geom_col()
+
+
+plot_bar(physeq_class,"RFTM_score.x", fill="Site.x")+
+  geom_col()+
+  geom_text(aes(label="Site.x"), position=position_stack(vjust=0.5), colour="white", size=5)
+
+plot_bar(physeq_class,"RFTM_score.x", fill="Site.x")+
+  geom_col()
+
+
+
+
+parse_phyloseq
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
