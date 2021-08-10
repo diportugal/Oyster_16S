@@ -57,6 +57,7 @@ x = tapply(RFTM_sig17$log2FoldChange, RFTM_sig17$Genus.x, function(x) max(x))
 x = sort(x, TRUE)
 RFTM_sig17$Genus = factor(as.character(RFTM_sig17$Genus.x), levels= names(x))
 
+
 ## Phylum ####
 ggplot(RFTM_sig17, aes(x=Phylum, y=log2FoldChange, color=Phylum))+
   geom_point(size=2)+ 
@@ -150,7 +151,7 @@ plotPCA( sigtab, intgroup = c( "Treatment2", "RFTM_score.x"), col=cols )
 
 
 
-
+#DESEQ2 of PeaCrabs ####
 #Analysis of Peacrab Scores ####
 
 PEA_dds17 <- phyloseq_to_deseq2(physeq_class, ~peacrabs.x) 
@@ -248,9 +249,6 @@ ggplot(PEA_sig17, aes(x=Genus.x, y=log2FoldChange, color=Phylum))+
        subtitle = "Comparing Genus and Phylum presense as it compares to Peacrab prescense",
        caption = "Data source: Oyster 16s 2017")
 ggsave("DESeq2_PEA_Phylum_Genus.jpeg", path="Plot Diagrams/Peacrab/", width = 7, height = 5)
-
-
-
 
 
 
