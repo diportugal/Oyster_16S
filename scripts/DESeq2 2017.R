@@ -58,6 +58,21 @@ x = sort(x, TRUE)
 RFTM_sig17$Genus = factor(as.character(RFTM_sig17$Genus.x), levels= names(x))
 
 
+##Kingdom ####
+ggplot(RFTM_sig17, aes(x=Kingdom, y=log2FoldChange, color=Phylum))+
+  geom_point(size=2)+ 
+  theme(axis.text.x = element_text(angle = -90, hjust = 0, vjust=0.5))+
+  theme(legend.position="right", legend.text=element_text(size=10), 
+        axis.ticks.x=element_blank(), axis.line=element_line(color="black"),
+        text = element_text(size=10), 
+        plot.title = element_text(face = "bold", hjust = 0.5, size = 15, colour = "#4E84C4"), 
+        plot.subtitle = element_text(hjust = 0.5,))+
+  labs(title = "DESeq2 of RFTM",
+       subtitle = "Comparing Kingdom and Phylum presense as it compares to RFTM score",
+       caption = "Data source: Oyster 16s 2017")
+ggsave(filename = "DES_RFTM_Kingdom.jpeg", plot=last_plot(), path ="Plot Diagrams/DESeq2/", width = 7, height = 5)  
+
+
 ## Phylum ####
 ggplot(RFTM_sig17, aes(x=Phylum, y=log2FoldChange, color=Phylum))+
   geom_point(size=2)+ 
@@ -67,9 +82,10 @@ ggplot(RFTM_sig17, aes(x=Phylum, y=log2FoldChange, color=Phylum))+
         text = element_text(size=10), 
         plot.title = element_text(face = "bold", hjust = 0.5, size = 15, colour = "#4E84C4"), 
         plot.subtitle = element_text(hjust = 0.5,))+
-  labs(title = "DESeq2 of RFTM/OTU",
-       subtitle = "Comparing Genus and Phylum presense as it compares to RFTM score",
-       caption = "Data source: Oyster 16s 2017 (Using new taxa data)")
+  labs(title = "DESeq2 of RFTM",
+       subtitle = "Comparing Phylum and Phylum presense as it compares to RFTM score",
+       caption = "Data source: Oyster 16s 2017")
+ggsave(filename = "DES_RFTM_Phylum.jpeg", plot=last_plot(), path ="Plot Diagrams/DESeq2/", width = 7, height = 5)  
 
 
 ## Class ####
@@ -81,12 +97,10 @@ ggplot(RFTM_sig17, aes(x=Class, y=log2FoldChange, color=Phylum))+
         text = element_text(size=10), 
         plot.title = element_text(face = "bold", hjust = 0.5, size = 15, colour = "#4E84C4"), 
         plot.subtitle = element_text(hjust = 0.5,))+
-  labs(title = "DESeq2 of RFTM/OTU",
+  labs(title = "DESeq2 of RFTM",
        subtitle = "Comparing Class and Phylum presense as it compares to RFTM score",
        caption = "Data source: Oyster 16s 2017")
-
-#ggsave("DESeq2_RFTM_Phylum_Order.jpeg",width = 7, height = 5)
-
+ggsave(filename = "DES_RFTM_Class.jpeg", plot=last_plot(), path ="Plot Diagrams/DESeq2/", width = 7, height = 5)  
 
 
 ##Order ####
@@ -98,59 +112,45 @@ ggplot(RFTM_sig17, aes(x=Order, y=log2FoldChange, color=Phylum))+
         text = element_text(size=10), 
         plot.title = element_text(face = "bold", hjust = 0.5, size = 15, colour = "#4E84C4"), 
         plot.subtitle = element_text(hjust = 0.5,))+
-  labs(title = "DESeq2 of RFTM/OTU",
+  labs(title = "DESeq2 of RFTM",
        subtitle = "Comparing Order and Phylum presense as it compares to RFTM score",
        caption = "Data source: Oyster 16s 2017")
+ggsave(filename = "DES_RFTM_Order.jpeg", plot=last_plot(), path ="Plot Diagrams/DESeq2/", width = 7, height = 5)  
 
-#ggsave("DESeq2_RFTM_Phylum_Class.jpeg",width = 7, height = 5)
 
 
 ##Family ####
-ggplot(RFTM_sig17, aes(x=Family, y=log2FoldChange, color=Phylum))+geom_point(size=2)+ 
+ggplot(RFTM_sig17, aes(x=Family, y=log2FoldChange, color=Phylum))+
+  geom_point(size=2)+ 
   theme(axis.text.x = element_text(angle = -90, hjust = 0, vjust=0.5))+
   theme(legend.position="right", legend.text=element_text(size=10), 
         axis.ticks.x=element_blank(), axis.line=element_line(color="black"),
         text = element_text(size=10), 
         plot.title = element_text(face = "bold", hjust = 0.5, size = 15, colour = "#4E84C4"), 
         plot.subtitle = element_text(hjust = 0.5,))+
-  labs(title = "DESeq2 of RFTM/OTU",
+  labs(title = "DESeq2 of RFTM",
        subtitle = "Comparing Family and Phylum presense as it compares to RFTM score",
        caption = "Data source: Oyster 16s 2017")
-
-#ggsave("DESeq2_RFTM_Phylum_Order.jpeg",width = 7, height = 5)
+ggsave(filename = "DES_RFTM_Family.jpeg", plot=last_plot(), path ="Plot Diagrams/DESeq2/", width = 7, height = 5)  
 
 
 ##Genus ####
-ggplot(RFTM_sig17, aes(x=Genus.x, y=log2FoldChange, color=Phylum))+geom_point(size=2)+ 
+ggplot(RFTM_sig17, aes(x=Genus.x, y=log2FoldChange, color=Phylum))+
+  geom_point(size=2)+ 
   theme(axis.text.x = element_text(angle = -90, hjust = 0, vjust=0.5))+
   theme(legend.position="right", legend.text=element_text(size=10), 
         axis.ticks.x=element_blank(), axis.line=element_line(color="black"),
         text = element_text(size=10), 
         plot.title = element_text(face = "bold", hjust = 0.5, size = 15, colour = "#4E84C4"), 
         plot.subtitle = element_text(hjust = 0.5,))+
-  labs(title = "DESeq2 of RFTM/OTU",
+  labs(title = "DESeq2 of RFTM",
        subtitle = "Comparing Genus and Phylum presense as it compares to RFTM score",
        caption = "Data source: Oyster 16s 2017")
-
-#ggsave("DESeq2_RFTM_Phylum_Family.jpeg",width = 7, height = 5)
-
+ggsave(filename = "DES_RFTM_Genus.jpeg", plot=last_plot(), path ="Plot Diagrams/DESeq2/", width = 7, height = 5)  
 
 
 
-#Additional plot types ####
-
-plotMA( res, ylim = c(-1, 1) ) 
-#The x axis is the average expression over all samples, the y axis the log2 fold change between treatment and control.
-#Genes with an adjusted p value below a threshold (here 0.1, the default) are shown in blue
-
-plotDispEsts( rftm_dds, ylim = c(1e-6, 1e1) )
-
-plotPCA( sigtab, intgroup = c( "Treatment2", "RFTM_score.x"), col=cols )
-
-
-
-
-
+#*####
 #DESEQ2 of PeaCrabs ####
 #Analysis of Peacrab Scores ####
 
@@ -176,6 +176,21 @@ x = sort(x, TRUE)
 PEA_sig17$Family = factor(as.character(PEA_sig17$Family), levels= names(x))
 
 
+##Kingdom ####
+ggplot(PEA_sig17, aes(x=Kingdom, y=log2FoldChange, color=Phylum))+
+  geom_point(size=2)+ 
+  theme(axis.text.x = element_text(angle = -90, hjust = 0, vjust=0.5))+
+  theme(legend.position="right", legend.text=element_text(size=10), 
+        axis.ticks.x=element_blank(), axis.line=element_line(color="black"),
+        text = element_text(size=10), 
+        plot.title = element_text(face = "bold", hjust = 0.5, size = 15, colour = "#4E84C4"), 
+        plot.subtitle = element_text(hjust = 0.5,))+
+  labs(title = "DESeq2 of Peacrab",
+       subtitle = "Comparing Kingdom and Phylum presense as it compares to Peacrab prescense",
+       caption = "Data source: Oyster 16s 2017")
+ggsave("DES_PEA_Kingdom.jpeg", path="Plot Diagrams/DESeq2/", width = 7, height = 5)
+
+
 ##Phylum ####
 ggplot(PEA_sig17, aes(x=Phylum, y=log2FoldChange, color=Phylum))+
   geom_point(size=2)+ 
@@ -185,10 +200,10 @@ ggplot(PEA_sig17, aes(x=Phylum, y=log2FoldChange, color=Phylum))+
         text = element_text(size=10), 
         plot.title = element_text(face = "bold", hjust = 0.5, size = 15, colour = "#4E84C4"), 
         plot.subtitle = element_text(hjust = 0.5,))+
-  labs(title = "DESeq2 of Peacrab/OTU",
+  labs(title = "DESeq2 of Peacrab",
        subtitle = "Comparing Phylum and Phylum presense as it compares to Peacrab prescense",
        caption = "Data source: Oyster 16s 2017")
-ggsave("DESeq2_PEA_Phylum_Phylum.jpeg", path="Plot Diagrams/Peacrab/", width = 7, height = 5)
+ggsave("DES_PEA_Phylum.jpeg", path="Plot Diagrams/DESeq2/", width = 7, height = 5)
 
 
 ##Class ####
@@ -200,10 +215,10 @@ ggplot(PEA_sig17, aes(x=Class, y=log2FoldChange, color=Phylum))+
         text = element_text(size=10), 
         plot.title = element_text(face = "bold", hjust = 0.5, size = 15, colour = "#4E84C4"), 
         plot.subtitle = element_text(hjust = 0.5,))+
-  labs(title = "DESeq2 of Peacrab/OTU",
+  labs(title = "DESeq2 of Peacrab",
        subtitle = "Comparing Class and Phylum presense as it compares to Peacrab prescense",
        caption = "Data source: Oyster 16s 2017")
-ggsave("DESeq2_PEA_Phylum_Class.jpeg", path="Plot Diagrams/Peacrab/", width = 7, height = 5)
+ggsave("DES_PEA_Class.jpeg", path="Plot Diagrams/DESeq2/", width = 7, height = 5)
 
 
 ##Order ####
@@ -215,10 +230,10 @@ ggplot(PEA_sig17, aes(x=Order, y=log2FoldChange, color=Phylum))+
         text = element_text(size=10), 
         plot.title = element_text(face = "bold", hjust = 0.5, size = 15, colour = "#4E84C4"), 
         plot.subtitle = element_text(hjust = 0.5,))+
-  labs(title = "DESeq2 of Peacrab/OTU",
+  labs(title = "DESeq2 of Peacrab",
        subtitle = "Comparing Order and Phylum presense as it compares to Peacrab prescense",
        caption = "Data source: Oyster 16s 2017")
-ggsave("DESeq2_PEA_Phylum_Order.jpeg", path="Plot Diagrams/Peacrab/", width = 7, height = 5)
+ggsave("DES_PEA_Order.jpeg", path="Plot Diagrams/DESeq2/", width = 7, height = 5)
 
 
 ##Family ####
@@ -230,10 +245,10 @@ ggplot(PEA_sig17, aes(x=Family, y=log2FoldChange, color=Phylum))+
         text = element_text(size=10), 
         plot.title = element_text(face = "bold", hjust = 0.5, size = 15, colour = "#4E84C4"), 
         plot.subtitle = element_text(hjust = 0.5,))+
-  labs(title = "DESeq2 of Peacrab/OTU",
+  labs(title = "DESeq2 of Peacrab",
        subtitle = "Comparing Family and Phylum presense as it compares to Peacrab prescense",
        caption = "Data source: Oyster 16s 2017")
-ggsave("DESeq2_PEA_Phylum_Family.jpeg", path="Plot Diagrams/Peacrab/", width = 7, height = 5)
+ggsave("DES_PEA_Family.jpeg", path="Plot Diagrams/DESeq2/", width = 7, height = 5)
 
 
 ##Genus ####
@@ -245,10 +260,25 @@ ggplot(PEA_sig17, aes(x=Genus.x, y=log2FoldChange, color=Phylum))+
         text = element_text(size=10), 
         plot.title = element_text(face = "bold", hjust = 0.5, size = 15, colour = "#4E84C4"), 
         plot.subtitle = element_text(hjust = 0.5,))+
-  labs(title = "DESeq2 of Peacrab/OTU",
+  labs(title = "DESeq2 of Peacrab",
        subtitle = "Comparing Genus and Phylum presense as it compares to Peacrab prescense",
        caption = "Data source: Oyster 16s 2017")
-ggsave("DESeq2_PEA_Phylum_Genus.jpeg", path="Plot Diagrams/Peacrab/", width = 7, height = 5)
+ggsave("DES_PEA_Genus.jpeg", path="Plot Diagrams/DESeq2/", width = 7, height = 5)
+
+#*####
+
+
+
+#Additional plot types ####
+
+plotMA( res, ylim = c(-1, 1) ) 
+#The x axis is the average expression over all samples, the y axis the log2 fold change between treatment and control.
+#Genes with an adjusted p value below a threshold (here 0.1, the default) are shown in blue
+
+plotDispEsts( rftm_dds, ylim = c(1e-6, 1e1) )
+
+plotPCA( sigtab, intgroup = c( "Treatment2", "RFTM_score.x"), col=cols )
+
 
 
 
