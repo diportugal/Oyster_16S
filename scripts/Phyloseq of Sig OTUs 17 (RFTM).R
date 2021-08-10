@@ -164,6 +164,7 @@ plot_richness(physeq_class, x="RFTM_score.x", measures=c("Chao1", "Shannon"), co
 
 
 # BAR PLOT ####
+#comment 
 
 ## Site Frequency by RFTM Score ####
 
