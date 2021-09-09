@@ -15,7 +15,6 @@ theme_set(theme_bw())
 #ORIGINAL DATA ####
 physeq_class
 
-
 #FILTERING FOR THE TOP 5 TAXA####
 
 ## Kingdom ####
@@ -87,12 +86,12 @@ physeq_genus5_no_na <- subset_samples(physeq_class_5genus, "Genus.x" != "NA", )
 data17.ord_genus5_no_na <- ordinate(physeq_genus5_no_na, "NMDS", "bray")
 
 
-
 #PLOT MANIPULATION EXAMPLES ####
 #STAGE 1 (Basic form)
 data17.ord <- ordinate(physeq_class, "NMDS", "bray")
-nmds_plot1= plot_ordination(physeq_class_5phyla, data17.ord, type="taxa", color="Phylum", title="NMDS of Top 5 Phyla")
+nmds_plot1= plot_ordination(physeq_class_5phyla, data17.ord, type="taxa", color="Phylum")
 print(nmds_plot1)
+
 
 #no na 
 plot_ordination(physeq_phylum5_no_na, data17.ord_phylum5_no_na, type="taxa", color="Phylum", title="NMDS of Top 5 Phyla")
@@ -118,7 +117,6 @@ print(nmds_plot3)
 #We can put the legend on the "top", "bottom", "right", or "left" 
 
 
-
 #STAGE 4 (Title Manipulation)
 #NMDS Phyla
 nmds_plot4= plot_ordination(physeq_class_5phyla, data17.ord, type="taxa", color="Phylum")+
@@ -137,16 +135,13 @@ print(nmds_plot4)
 #0 = left, 0.5 = center, 1 = right 
 #We can add a subtitle and data citation for figures
 
+#*####
 
-
-
-
-
-#ANALYSIS BY TAXA ####
+#Orignial Data####
 #MAKING NMDS (TAXA) PLOTS FOR THE TOP RESULTS ON EACH TAXA 
 #Only considering taxa - without NA values
 
-#NMDS of Kingdom Plots 
+##Kingdom Top 5 #### 
 plot_ordination(physeq_class, data17.ord, type="taxa", color="Kingdom")+
   scale_colour_manual(values=c("Archaea" = "#FA7169", "Bacteria" = "#2E86C1", "Eukaryota" = "#8FC172", "NA"= "#AF7AC5" ))+
   theme(legend.position="right", legend.text=element_text(size=10), 
@@ -160,7 +155,7 @@ plot_ordination(physeq_class, data17.ord, type="taxa", color="Kingdom")+
 ggsave(filename = "NMDS_Top5King_17.jpeg", plot=last_plot(), path ="Plot Diagrams/NMDS Original /", width = 7, height = 5)  
 
 
-#NMDS of Phylum Plots 
+##Phylum Top 5 ####  
 plot_ordination(physeq_phylum5_no_na, data17.ord_phylum5_no_na, type="taxa", color="Phylum")+
   theme(legend.position="right", legend.text=element_text(size=10), 
         axis.ticks.x=element_blank(), axis.line=element_line(color="black"),
@@ -173,7 +168,7 @@ plot_ordination(physeq_phylum5_no_na, data17.ord_phylum5_no_na, type="taxa", col
 ggsave(filename = "NMDS_Top5Phyla_17.jpeg", plot=last_plot(), path ="Plot Diagrams/NMDS Original /", width = 7, height = 5)  
 
 
-#NMDS of Class 
+##Class Top 5 #### 
 plot_ordination(physeq_class5_no_na, data17.ord_class5_no_na, type="taxa", color="Class")+
   theme(legend.position="right", legend.text=element_text(size=10), 
         axis.ticks.x=element_blank(), axis.line=element_line(color="black"),
@@ -186,8 +181,7 @@ plot_ordination(physeq_class5_no_na, data17.ord_class5_no_na, type="taxa", color
 ggsave(filename = "NMDS_Top5Class_17.jpeg", plot=last_plot(), path ="Plot Diagrams/NMDS Original /", width = 7, height = 5)  
 
 
-
-#NMDS of Order 
+##Order Top 5 #### 
 plot_ordination(physeq_order5_no_na, data17.ord_order5_no_na, type="taxa", color="Order")+
   theme(legend.position="right", legend.text=element_text(size=10), 
         axis.ticks.x=element_blank(), axis.line=element_line(color="black"),
@@ -200,7 +194,7 @@ plot_ordination(physeq_order5_no_na, data17.ord_order5_no_na, type="taxa", color
 ggsave(filename = "NMDS_Top5Order_17.jpeg", plot=last_plot(), path ="Plot Diagrams/NMDS Original /", width = 7, height = 5)  
   
 
-#NMDS of Family 
+##Family Top 5 #### 
 plot_ordination(physeq_family5_no_na, data17.ord_family5_no_na, type="taxa", color="Family")+
   theme(legend.position="right", legend.text=element_text(size=10), 
         axis.ticks.x=element_blank(), axis.line=element_line(color="black"),
@@ -213,7 +207,7 @@ plot_ordination(physeq_family5_no_na, data17.ord_family5_no_na, type="taxa", col
 ggsave(filename = "NMDS_Top5Family_17.jpeg", plot=last_plot(), path ="Plot Diagrams/NMDS Original /", width = 7, height = 5)  
 
 
-#NMDS of Genus 
+##Genus Top 5 #### 
 plot_ordination(physeq_genus5_no_na, data17.ord_genus5_no_na, type="taxa", color="Genus.x")+
   theme(legend.position="right", legend.text=element_text(size=10), 
         axis.ticks.x=element_blank(), axis.line=element_line(color="black"),
@@ -225,8 +219,129 @@ plot_ordination(physeq_genus5_no_na, data17.ord_genus5_no_na, type="taxa", color
        caption = "Data source: Oyster 16s 2017")
 ggsave(filename = "NMDS_Top5Genus_17.jpeg", plot=last_plot(), path ="Plot Diagrams/NMDS Original /", width = 7, height = 5)  
 
+#*####
+
+#RFTM NMDS####
+rftmpos2 = RFTM_sig17[RFTM_sig17$log2FoldChange<0,]
+rftmasv2 = row.names(rftmpos2)
+
+phylo17_rftm = prune_taxa(taxa_sums(physeq_class) > 0,physeq_class) 
+rftmdata17.ord <- ordinate(phylo17_rftm, "NMDS", "bray")
+
+#Filtering top 5 Order (RFTM)####
+
+##Kingdom####
+plot_ordination(phylo17_rftm, rftmdata17.ord, type="taxa", color="Kingdom")+
+  theme(legend.position="right", legend.text=element_text(size=10), 
+        axis.ticks.x=element_blank(), axis.line=element_line(color="black"),
+        text = element_text(size=10), 
+        plot.title = element_text(face = "bold", hjust = 0.5, size = 15, colour = "#4E84C4"), 
+        plot.subtitle = element_text(hjust = 0.5))+
+  labs(title = "NMDS RFTM Plots",
+       subtitle = "Plotting Kingdom Diversity for RFTM Score",
+       caption = "Data source: Oyster 16s 2017")
+ggsave(filename = "NMDS_RFTM_Kingdom_17.jpeg", plot=last_plot(), path ="Plot Diagrams/NMDS /", width = 7, height = 5)  
 
 
+##Phylum####
+plot_ordination(phylo17_rftm, rftmdata17.ord, type="taxa", color="Phylum")+
+  theme(legend.position="none", legend.text=element_text(size=2),
+        axis.ticks.x=element_blank(), axis.line=element_line(color="black"),
+        text = element_text(size=10), 
+        plot.title = element_text(face = "bold", hjust = 0.5, size = 15, colour = "#4E84C4"), 
+        plot.subtitle = element_text(hjust = 0.5))+
+  labs(title = "NMDS RFTM Plots",
+       subtitle = "Plotting Phylum Diversity for RFTM Score",
+       caption = "Data source: Oyster 16s 2017")
+ggsave(filename = "NMDS_RFTM_phylum_17.jpeg", plot=last_plot(), path ="Plot Diagrams/NMDS /", width = 7, height = 5)  
+
+
+##Order####
+plot_ordination(phylo17_rftm, rftmdata17.ord, type="taxa", color="Order")+
+  theme(legend.position="none", legend.text=element_text(size=2),
+        axis.ticks.x=element_blank(), axis.line=element_line(color="black"),
+        text = element_text(size=10), 
+        plot.title = element_text(face = "bold", hjust = 0.5, size = 15, colour = "#4E84C4"), 
+        plot.subtitle = element_text(hjust = 0.5))+
+  labs(title = "NMDS RFTM Plots",
+       subtitle = "Plotting Order Diversity for RFTM Score",
+       caption = "Data source: Oyster 16s 2017")
+ggsave(filename = "NMDS_RFTM_order_17.jpeg", plot=last_plot(), path ="Plot Diagrams/NMDS /", width = 7, height = 5)
+
+
+##Class####
+plot_ordination(phylo17_rftm, rftmdata17.ord, type="taxa", color="Class")+
+  theme(legend.position="none", legend.text=element_text(size=2),
+        axis.ticks.x=element_blank(), axis.line=element_line(color="black"),
+        text = element_text(size=10), 
+        plot.title = element_text(face = "bold", hjust = 0.5, size = 15, colour = "#4E84C4"), 
+        plot.subtitle = element_text(hjust = 0.5))+
+  labs(title = "NMDS RFTM Plots",
+       subtitle = "Plotting Class Diversity for RFTM Score",
+       caption = "Data source: Oyster 16s 2017")
+ggsave(filename = "NMDS_RFTM_class_17.jpeg", plot=last_plot(), path ="Plot Diagrams/NMDS /", width = 7, height = 5)
+
+
+##Family####
+plot_ordination(phylo17_rftm, rftmdata17.ord, type="taxa", color="Family")+
+  theme(legend.position="none", legend.text=element_text(size=2),
+        axis.ticks.x=element_blank(), axis.line=element_line(color="black"),
+        text = element_text(size=10), 
+        plot.title = element_text(face = "bold", hjust = 0.5, size = 15, colour = "#4E84C4"), 
+        plot.subtitle = element_text(hjust = 0.5))+
+  labs(title = "NMDS RFTM Plots",
+       subtitle = "Plotting Family Diversity for RFTM Score",
+       caption = "Data source: Oyster 16s 2017")
+ggsave(filename = "NMDS_RFTM_family_17.jpeg", plot=last_plot(), path ="Plot Diagrams/NMDS /", width = 7, height = 5)
+
+
+##Genus####
+plot_ordination(phylo17_rftm, rftmdata17.ord, type="taxa", color="Genus.x")+
+  theme(legend.position="none", legend.text=element_text(size=2),
+        axis.ticks.x=element_blank(), axis.line=element_line(color="black"),
+        text = element_text(size=10), 
+        plot.title = element_text(face = "bold", hjust = 0.5, size = 15, colour = "#4E84C4"), 
+        plot.subtitle = element_text(hjust = 0.5))+
+  labs(title = "NMDS RFTM Plots",
+       subtitle = "Plotting Genus Diversity for RFTM Score",
+       caption = "Data source: Oyster 16s 2017")
+ggsave(filename = "NMDS_RFTM_genus_17.jpeg", plot=last_plot(), path ="Plot Diagrams/NMDS /", width = 7, height = 5)
+
+
+#*####
+
+
+#PEA CRAB NMDS ####
+peapos = Peaphyseq[Peaphyseq$log2FoldChange<0,]
+peaasv = row.names(rftmpos)
+
+phylo17_pea = prune_taxa(taxa_sums(Peaphyseq) > 0,Peaphyseq ) 
+
+peadata17.ord <- ordinate(Peaphyseq, "NMDS", "bray")
+
+
+pea.ord <- ordinate(phylo17_pea, "NMDS", "bray")
+
+print(nmds_plot1)
+
+
+##Kingdom####
+
+physeq_sigPea
+
+##Kingdom####
+##Phylum####
+##Class####
+##Order####
+##Family####
+##Genus####
+
+
+
+
+
+
+#*####
 #ANALYSIS BY SAMPLES ####
 
 #This is showing that the oysters that have a peacrab present a less similar than the ones that have no peacrab presence 
@@ -264,7 +379,6 @@ plot_ordination(physeq_class, data17.ord, type="samples", color="RFTM_score.x", 
        subtitle = "Community Diversity",
        caption = "Data source: Oyster 16s 2017")+
   facet_wrap(~peacrabs.x, )
-
 
 
 

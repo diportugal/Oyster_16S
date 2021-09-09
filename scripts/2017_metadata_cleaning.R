@@ -79,6 +79,13 @@ data_meta17_clean$Weight_pre <-sub("MISSING","NA", data_meta17_clean$Weight_pre)
 data_meta17_clean
 
 
+#*####
+data_meta17_clean$RFTM_score.asnum <- as.numeric(as.character(data_meta17_clean$RFTM_score.x))
+
+data_meta17_clean$peacrabs.asnum <- as.numeric(as.character(data_meta17_clean$peacrabs.x))
+
+#*####
+
 
 #Making Unique IDs the new row names for Phyloseq
 
@@ -97,12 +104,6 @@ write.csv(data_meta17_clean, file = "Oyster_data_raw/meta17cleaned")
 
 
 #End here with the data cleaning and start a new script for the data analysis on phyloseq ####
-
-
-#DO NOT CHANGE ANYTHING HERE 
-
-
-
 
 
 

@@ -35,7 +35,7 @@ physeq_class
 
 #Analysis of RFTM Scores ####
 #Make RFTM_score.x not a factor - Make it a numerical value 
-RFTM_dds17 <- phyloseq_to_deseq2(physeq_class, ~RFTM_score.x) 
+RFTM_dds17 <- phyloseq_to_deseq2(physeq_class, ~RFTM_score.asnum) 
 RFTM_dds17 <- DESeq(RFTM_dds17, test="Wald", fitType="parametric")
 
 RFTM_res17= results(RFTM_dds17, cooksCutoff = FALSE)
@@ -91,16 +91,16 @@ ggsave(filename = "DES_RFTM_Phylum.jpeg", plot=last_plot(), path ="Plot Diagrams
 ## Class ####
 ggplot(RFTM_sig17, aes(x=Class, y=log2FoldChange, color=Phylum))+
   geom_point(size=2)+ 
-  theme(axis.text.x = element_text(angle = -90, hjust = 0, vjust=0.5))+
+  theme(axis.text.x = element_text(angle = -45, hjust = 0, vjust=0.5))+
   theme(legend.position="right", legend.text=element_text(size=10), 
         axis.ticks.x=element_blank(), axis.line=element_line(color="black"),
         text = element_text(size=10), 
-        plot.title = element_text(face = "bold", hjust = 0.5, size = 15, colour = "#4E84C4"), 
+        plot.title = element_text(face = "bold", hjust = 0.5, size = 15, colour = "Black"), 
         plot.subtitle = element_text(hjust = 0.5,))+
-  labs(title = "DESeq2 of RFTM",
-       subtitle = "Comparing Class and Phylum presense as it compares to RFTM score",
+  labs(title = "Log2FoldChange of Perkinsus",
+       subtitle = "By Class",
        caption = "Data source: Oyster 16s 2017")
-ggsave(filename = "DES_RFTM_Class.jpeg", plot=last_plot(), path ="Plot Diagrams/DESeq2/", width = 7, height = 5)  
+ggsave(filename = "DES_RFTM_Class.jpeg", plot=last_plot(), path ="Plot Diagrams/", width = 7, height = 5)  
 
 
 ##Order ####
@@ -162,7 +162,6 @@ alpha = 0.05
 PEA_sig17 = PEA_res17[which(PEA_res17$padj < alpha), ]
 PEA_sig17 = cbind(as(PEA_sig17, "data.frame"), as(tax_table(physeq_class)[rownames(PEA_sig17), ], "matrix"))
 
-head(PEA_sig17)
 dim(PEA_sig17)
 
 #Phylum = Variable 1
@@ -209,16 +208,16 @@ ggsave("DES_PEA_Phylum.jpeg", path="Plot Diagrams/DESeq2/", width = 7, height = 
 ##Class ####
 ggplot(PEA_sig17, aes(x=Class, y=log2FoldChange, color=Phylum))+
   geom_point(size=2)+ 
-  theme(axis.text.x = element_text(angle = -90, hjust = 0, vjust=0.5))+
+  theme(axis.text.x = element_text(angle = -45, hjust = 0, vjust=0.5))+
   theme(legend.position="right", legend.text=element_text(size=10), 
         axis.ticks.x=element_blank(), axis.line=element_line(color="black"),
         text = element_text(size=10), 
-        plot.title = element_text(face = "bold", hjust = 0.5, size = 15, colour = "#4E84C4"), 
+        plot.title = element_text(face = "bold", hjust = 0.5, size = 15, colour = "Black"), 
         plot.subtitle = element_text(hjust = 0.5,))+
-  labs(title = "DESeq2 of Peacrab",
-       subtitle = "Comparing Class and Phylum presense as it compares to Peacrab prescense",
+  labs(title = "Log2FoldChange of Pea Crab",
+       subtitle = "By Class",
        caption = "Data source: Oyster 16s 2017")
-ggsave("DES_PEA_Class.jpeg", path="Plot Diagrams/DESeq2/", width = 7, height = 5)
+ggsave("DES_PEA_Class.jpeg", path="Plot Diagrams/", width = 7, height = 5)
 
 
 ##Order ####

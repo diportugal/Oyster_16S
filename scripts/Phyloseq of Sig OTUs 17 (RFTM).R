@@ -18,17 +18,32 @@ library("ggpubr")
 
 
 
-#Isolating Significant OTUs for RFTM Variable (2017) ####
 
-#sig_OTUs_RFTM17 <- RFTM_sig17 %>% 
-  #select(Kingdom, Phylum, Class, Order, Family, Genus.x)
 
-rftmpos = RFTM_sig17[RFTM_sig17$log2FoldChange<0,]
-rftmasv = row.names(rftmpos)
+#Pruning OTU names to the RFTM Sig Tab ####
+#sig_OTUs_RFTM17 <- RFTM_sig17 %>% select(Kingdom, Phylum, Class, Order, Family, Genus.x) (Dont use this)
+##New phyloseq object for RFTM "phylo17_rftm"####
 
-phylo17_rftm = prune_taxa(taxa_sums(physeq_class) > 0,physeq_class ) 
+tax_table(physeq_class) <- tax_table(physeq_class)[,2:9]
 
-rftmdata17.ord <- ordinate(phylo17_rftm, "NMDS", "bray")
+rftmasv = row.names(RFTM_sig17) 
+
+phylo17_rftm = prune_taxa(taxa_names(physeq_class) %in% rftmasv, physeq_class)
+
+tax_table(phylo17_rftm)
+
+phylo17_rftm
+
+
+#Pruning OTU names to the Pea Crab Sig Tab ####
+##New phyloseq object for Peacrabs "phylo17_pea" ####
+peaasv = row.names(PEA_sig17) 
+
+phylo17_pea = prune_taxa(taxa_names(physeq_class) %in% peaasv, physeq_class) 
+
+tax_table(phylo17_pea)
+
+phylo17_pea
 
 
 
@@ -38,7 +53,7 @@ rftmdata17.ord <- ordinate(phylo17_rftm, "NMDS", "bray")
 
 plot_richness(physeq_class, measures=c("Chao1", "Shannon"), x="RFTM_score.x", col="Site.x")
 
-plot_richness(physeq_sigPea, measures=c("Chao1", "Shannon"), x="peacrabs.x", col="Site.x")
+plot_richness(phylo17_pea, measures=c("Chao1", "Shannon"), x="peacrabs.x", col="Site.x")
 
 plot_richness(RFTM_sig17, measures=c("Chao1", "Shannon"), x="peacrabs.x", col="Site.x")
 
@@ -164,7 +179,25 @@ plot_richness(physeq_class, x="RFTM_score.x", measures=c("Chao1", "Shannon"), co
 
 
 # BAR PLOT ####
-#comment 
+##Quantifying RFTM Presence ####
+
+#X=RFTM  Y=Abundance
+plot_bar(physeq_class,"RFTM_score.asnum")+
+  geom_col()+
+  ggtitle("RFTM Abundance")+
+  theme(plot.title=element_text(hjust=0.5, vjust=0.3, face="bold", colour='Black', size=10))
+ggsave(filename = "Barplot_RFTM_17.jpeg", plot=last_plot(), path="Plot Diagrams/", width = 7, height = 5)  
+
+
+
+plot_bar(physeq_class,"peacrabs.x")+
+  geom_col()+
+  ggtitle("Peacrab Abundance")+
+  theme(plot.title=element_text(hjust=0.5, vjust=0.3, face="bold", size=10))
+ggsave(filename = "Barplot_PeaCrab_17.jpeg", plot=last_plot(), path="Plot Diagrams/", width = 7, height = 5)  
+
+
+
 
 ## Site Frequency by RFTM Score ####
 

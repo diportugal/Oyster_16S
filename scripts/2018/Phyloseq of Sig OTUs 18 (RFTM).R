@@ -3,15 +3,22 @@
 #Contact: dportugal8@gmail.com 
 #Date 21-7-2021
 
+library("dplyr")
+library("ggpubr")
+library("phyloseq"); packageVersion("phyloseq")
+data("GlobalPatterns")
+library("ggplot2"); packageVersion("ggplot2")
+library("plyr"); packageVersion("plyr")
+library("data.table")
+library("vegan")
+#install.packages("ggpubr")
 
 
 #PREP WORK ####
 
 ##Isolating significant OTUs for RFTM Score####
-sig_OTUs_RFTM18 <- RFTM_sig18 %>% 
+phylo_rftm18 <- RFTM_sig18 %>% 
   select(Kingdom, Phylum, Class, Order, Family, Genus.x)
-
-view(sig_OTUs_RFTM18)
 
 
 metadata18 <- read.csv("Oyster_data_raw/cleanmetadata18")
@@ -49,14 +56,10 @@ rownames(otumat_matrix18)
 #STILL UNIQUE ID 
 
 #Using significant otu data from DESeq2 analysis of RFTM score
-sig_OTUs_RFTM18 <- as.matrix(RFTM_sig18)
-colnames(RFTM_sig18) <- c("Kingdom", "Phylum", "Class", "Order", "Family", "Genus.x", "Genus.y", "species")
+sig_OTUs_RFTM18 <- as.matrix(phylo_rftm18)
+colnames(phylo_rftm18) <- c("Kingdom", "Phylum", "Class", "Order", "Family", "Genus.x")
 rownames(sig_OTUs_RFTM18)
 #STILL SEQUENCE 
-
-
-#Creating a Treatment2 column with the combination ####
-SAMP18$Treatment2_18 <- paste(SAMP18$Treatment1_Density, "_", SAMP18$Treatment2_Diversity)
 
 
 
@@ -87,7 +90,7 @@ physeq_sig18 = phyloseq(OTU18, sig_RF_TAX18, SAMP18)
 physeq_sig18
 
 
-data_sig18.ord <- ordinate(physeq_sig18, "NMDS", "bray")
+rftmdata18.ord <- ordinate(physeq_sig18, "NMDS", "bray")
 
 
 
@@ -97,7 +100,6 @@ dim(OTU18)
 dim(sig_RF_TAX18)
 
 
-#NMDS Plots for Each Taxonomy level; type="taxa"####
 
 ##NMDS - SIG OTUS - KINGDOM ####
 plot_ordination(physeq_sig18, data_sig18.ord, type="taxa", color="Kingdom")+
@@ -249,6 +251,18 @@ plot_ordination(physeq_sig18, data_sig18.ord, type="biplot", color = "Treatment2
 #Ledgend title manipulation #####
 #labs(x="miles per gallon", y="displacement", size="horsepower", col="# of cylinders", shape="# of gears")
 
+plot_bar(physeq_class18,"RFTM_score.x", fill="Species.x")+
+  geom_col()+
+  labs(title = "Barplot Site Frequency ",
+       subtitle = "By RFTM Score",
+       caption = "Data source: Oyster 16s 2017")+
+  theme(legend.position="right", legend.text=element_text(size=10),
+        axis.text.x=element_text(angle=45,hjust=1,vjust=1,size=12),
+        axis.ticks.x=element_blank(), axis.line=element_line(color="black"),
+        text = element_text(size=10), 
+        panel.grid.major = element_blank(),
+        plot.title = element_text(face = "bold", hjust = 0.5, size = 15, colour = "#4E84C4"), 
+        plot.subtitle = element_text(hjust = 0.5))
 
 
 
