@@ -352,7 +352,6 @@ physeq_sigPea
 
 peacrabdata.ord <- ordinate(physeq_sigPea, "NMDS", "bray")
 
-#Comment
 
 
 
