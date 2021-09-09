@@ -182,19 +182,43 @@ plot_richness(physeq_class, x="RFTM_score.x", measures=c("Chao1", "Shannon"), co
 ##Quantifying RFTM Presence ####
 
 #X=RFTM  Y=Abundance
-plot_bar(physeq_class,"RFTM_score.asnum")+
-  geom_col()+
-  ggtitle("RFTM Abundance")+
-  theme(plot.title=element_text(hjust=0.5, vjust=0.3, face="bold", colour='Black', size=10))
-ggsave(filename = "Barplot_RFTM_17.jpeg", plot=last_plot(), path="Plot Diagrams/", width = 7, height = 5)  
+
+metadata17_df %>% 
+  ggplot(aes(x=peacrabs.x, color=Site.x, fill=Site.x)) +
+  geom_histogram(binwidth=1, alpha=0.5, stat = "count", position = "dodge") +
+  stat_bin(binwidth=0.5, geom='text', color='Black', aes(label=..count..), 
+           position = "dodge", vjust = 0.5)+
+  theme(legend.position="right", legend.text=element_text(size=10), 
+        axis.ticks.x=element_blank(), axis.line=element_line(color="black"),
+        text = element_text(size=10), 
+        plot.title = element_text(face = "bold", hjust = 0.5, size = 15, colour = "Black"), 
+        plot.subtitle = element_text(hjust = 0.5))+
+  labs(title = "ABUNDANCE OF PEACRAB",
+       caption = "Data source: Oyster 16s 2017", 
+       y="Abundance", 
+       x = "Peacrab Quantity")+
+  scale_x_continuous(breaks=c(0, 1))
+ggsave(filename = "Hist_PeaCrab_17.jpeg", plot=last_plot(), path="Plot Diagrams/", width = 7, height = 5)  
 
 
 
-plot_bar(physeq_class,"peacrabs.x")+
-  geom_col()+
-  ggtitle("Peacrab Abundance")+
-  theme(plot.title=element_text(hjust=0.5, vjust=0.3, face="bold", size=10))
-ggsave(filename = "Barplot_PeaCrab_17.jpeg", plot=last_plot(), path="Plot Diagrams/", width = 7, height = 5)  
+metadata17_df %>% 
+  ggplot(aes(x=RFTM_score.asnum, fill=Site.x))+
+  geom_histogram(binwidth=1, alpha=1, stat = "count", width = 0.4, position = "dodge")+
+  scale_x_continuous(breaks=c(0, 1, 2, 3, 4, 5))+
+  stat_bin(binwidth=0.5, geom='text', color='Black', aes(label=..count..), 
+           position = "dodge", vjust = 0.5)+
+  theme(legend.position="right", legend.text=element_text(size=10), 
+        axis.ticks.x=element_blank(), axis.line=element_line(color="black"),
+        text = element_text(size=10), 
+        plot.title = element_text(face = "bold", hjust = 0.5, size = 15, colour = "Black"), 
+        plot.subtitle = element_text(hjust = 0.5))+
+  labs(title = "ABUNDANCE OF PERKINSUS",
+       caption = "Data source: Oyster 16s 2017", 
+       y="Abundance", 
+       x = "RFTM Score")
+ggsave(filename = "Hist_RFTM_17.jpeg", plot=last_plot(), path="Plot Diagrams/", width = 7, height = 5)  
+
 
 
 
